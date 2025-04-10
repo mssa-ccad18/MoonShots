@@ -41,7 +41,7 @@ Excited about the opportunity to learn and develop the skills to explore the dig
 
 ---
 
-### 💻 Jay Harris
+### 💻 Jay 
 <a href="https://github.com/JustJaysRepo/" target="_blank">GitHub Profile</a>
 *Code Review/Tester:*  
 *Intro:*
