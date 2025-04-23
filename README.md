@@ -43,8 +43,14 @@ Excited about the opportunity to learn and develop the skills to explore the dig
 
 ### 💻 Jay 
 <a href="https://github.com/JustJaysRepo/" target="_blank">GitHub Profile</a>
+
 *Code Review/Tester:*  
+
 *Intro:*
+
+Hey, I’m Jay — I enjoy breaking things just enough to make them better. I have a strong eye for detail, and I get a kick out of catching bugs before they sneak into the main branch. Always down to learn something new, contribute solid code, and help keep the project smooth and clean.
+
+
 
 ---
 
