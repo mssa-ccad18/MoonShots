@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "pzCVM9mhvCM=",
   "success": true,
   "projectFilePath": "C:\\Users\\Juani\\MSSA\\MoonShots\\MoonShots\\AmazingCalculators\\AmazingCalculators\\AmazingCalculators.csproj",
+=======
+  "dgSpecHash": "1H3p7yzlylQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\zi_pp\\mssa\\MoonShots\\AmazingCalculators\\AmazingCalculators\\AmazingCalculators.csproj",
+>>>>>>> main
   "expectedPackageFiles": [],
   "logs": []
 }
