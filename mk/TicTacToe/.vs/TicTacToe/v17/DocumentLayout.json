@@ -1,0 +1,89 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\micha\\mssa\\Moonshots\\MoonShots\\mk\\TicTacToe\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{33063297-240F-44CC-A660-A6FD13D3DDCA}|TicTacToe\\TicTacToe.csproj|c:\\users\\micha\\mssa\\moonshots\\moonshots\\mk\\tictactoe\\tictactoe\\tictactoe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33063297-240F-44CC-A660-A6FD13D3DDCA}|TicTacToe\\TicTacToe.csproj|solutionrelative:tictactoe\\tictactoe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33063297-240F-44CC-A660-A6FD13D3DDCA}|TicTacToe\\TicTacToe.csproj|c:\\users\\micha\\mssa\\moonshots\\moonshots\\mk\\tictactoe\\tictactoe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33063297-240F-44CC-A660-A6FD13D3DDCA}|TicTacToe\\TicTacToe.csproj|solutionrelative:tictactoe\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40EFEAEC-D6A5-48C8-8740-245E842E9031}|TicTacToeTest\\TicTacToeTest.csproj|c:\\users\\micha\\mssa\\moonshots\\moonshots\\mk\\tictactoe\\tictactoetest\\tictactoetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40EFEAEC-D6A5-48C8-8740-245E842E9031}|TicTacToeTest\\TicTacToeTest.csproj|solutionrelative:tictactoetest\\tictactoetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{40EFEAEC-D6A5-48C8-8740-245E842E9031}|TicTacToeTest\\TicTacToeTest.csproj|c:\\users\\micha\\mssa\\moonshots\\moonshots\\mk\\tictactoe\\tictactoetest\\mstestsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{40EFEAEC-D6A5-48C8-8740-245E842E9031}|TicTacToeTest\\TicTacToeTest.csproj|solutionrelative:tictactoetest\\mstestsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TicTacToeTest.cs",
+              "DocumentMoniker": "C:\\Users\\micha\\mssa\\Moonshots\\MoonShots\\mk\\TicTacToe\\TicTacToeTest\\TicTacToeTest.cs",
+              "RelativeDocumentMoniker": "TicTacToeTest\\TicTacToeTest.cs",
+              "ToolTip": "C:\\Users\\micha\\mssa\\Moonshots\\MoonShots\\mk\\TicTacToe\\TicTacToeTest\\TicTacToeTest.cs",
+              "RelativeToolTip": "TicTacToeTest\\TicTacToeTest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:11:34.499Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MSTestSettings.cs",
+              "DocumentMoniker": "C:\\Users\\micha\\mssa\\Moonshots\\MoonShots\\mk\\TicTacToe\\TicTacToeTest\\MSTestSettings.cs",
+              "RelativeDocumentMoniker": "TicTacToeTest\\MSTestSettings.cs",
+              "ToolTip": "C:\\Users\\micha\\mssa\\Moonshots\\MoonShots\\mk\\TicTacToe\\TicTacToeTest\\MSTestSettings.cs",
+              "RelativeToolTip": "TicTacToeTest\\MSTestSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T14:11:19.525Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TicTacToe.cs",
+              "DocumentMoniker": "C:\\Users\\micha\\mssa\\Moonshots\\MoonShots\\mk\\TicTacToe\\TicTacToe\\TicTacToe.cs",
+              "RelativeDocumentMoniker": "TicTacToe\\TicTacToe.cs",
+              "ToolTip": "C:\\Users\\micha\\mssa\\Moonshots\\MoonShots\\mk\\TicTacToe\\TicTacToe\\TicTacToe.cs",
+              "RelativeToolTip": "TicTacToe\\TicTacToe.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAswEEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T13:32:12.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\micha\\mssa\\Moonshots\\MoonShots\\mk\\TicTacToe\\TicTacToe\\Program.cs",
+              "RelativeDocumentMoniker": "TicTacToe\\Program.cs",
+              "ToolTip": "C:\\Users\\micha\\mssa\\Moonshots\\MoonShots\\mk\\TicTacToe\\TicTacToe\\Program.cs",
+              "RelativeToolTip": "TicTacToe\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-23T13:16:25.819Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
