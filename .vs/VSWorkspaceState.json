@@ -1,10 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\mk",
-    "\\mk\\TicTacToe",
-    "\\mk\\TicTacToe\\TicTacToe",
-    "\\mk\\TicTacToe\\TicTacToe\\obj"
+    "\\AmazingCalculators"
   ],
-  "PreviewInSolutionExplorer": false
+  "SelectedNode": "\\AmazingCalculators\\AmazingCalculators.sln",
+  "PreviewInSolutionExplorer": true
 }
