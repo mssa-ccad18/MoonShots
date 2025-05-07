@@ -1,7 +1,16 @@
+using AmazingCalculatorLibrary.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+//// Add EF Core service for database connection that is from the appsettings.json file
+//builder.Services.AddDbContext<FitnessDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("FitnessDatabase"))
+//);
+
 
 var app = builder.Build();
 
