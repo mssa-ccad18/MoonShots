@@ -12,12 +12,16 @@ namespace AmazingCalculatorLibrary.Models
         public double WeightLbs { get; set; }
         public double HeightFeet { get; set; }
         public double HeightInches { get; set; }
+        public double HeightInCm => (HeightFeet * 30.48) + (HeightInches * 2.54);
+        public double WeightKGs => WeightLbs * 0.45;
+        public bool IsMale { get; set; }
 
-        public BMI(double weightLbs, double heightFeet, double heightInches)
+        public BMI(double weightLbs, double heightFeet, double heightInches, bool ismale)
         {
             WeightLbs = weightLbs;
             HeightFeet = heightFeet;
             HeightInches = heightInches;
+            IsMale = ismale;
         }
 
         private double ConvertHeightToInches()
@@ -25,32 +29,34 @@ namespace AmazingCalculatorLibrary.Models
             return (HeightFeet * 12) + HeightInches;
         }
 
-        public double Calculate()
+        public double BMIValue
         {
-            double heightInTotalInches = ConvertHeightToInches();
-            if (heightInTotalInches <= 0)
-                throw new ArgumentException("Height must be greater than zero.");
+            get
+            {
+                double heightInTotalInches = ConvertHeightToInches();
+                if (heightInTotalInches <= 0)
+                    throw new ArgumentException("Height must be greater than zero.");
 
-            return (WeightLbs * 703) / (heightInTotalInches * heightInTotalInches);
+                return (WeightLbs * 703) / (heightInTotalInches * heightInTotalInches);
+            }
         }
 
-        public string GetBMICategory()
+        public string BMICategory
         {
-            double bmi = Calculate();
+            get
+            {
 
-            if (bmi < 18.5)
-                return "UnderWeight";
-            else if (bmi >= 18.5 && bmi <= 24.9)
-                return "Normal weight";
-            else if (bmi >= 25.0 && bmi <= 29.9)
-                return "Overweight";
-            return "obese";
+                if (BMIValue < 18.5)
+                    return "UnderWeight";
+                else if (BMIValue >= 18.5 && BMIValue <= 24.9)
+                    return "Normal weight";
+                else if (BMIValue >= 25.0 && BMIValue <= 29.9)
+                    return "Overweight";
+                return "obese";
 
+            }
         }
-        public double TestConvertHeightToInches() //wrapper method to public method
-        {
-            return ConvertHeightToInches();
-        }
+        
     }
 
 

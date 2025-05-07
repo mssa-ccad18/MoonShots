@@ -32,7 +32,6 @@ public class BMITest
         double heightInches = 3;
         BMI bmi = new BMI(weight, heightFeet, heightInches);
 
-
     }
 
 }
