@@ -15,10 +15,19 @@ namespace AmazingCalculatorLibrary.Models
         [Key]
         public int UserId { get; set; } // Unique identifier for the user profile
 
+
+
+
         // User details
+        [Required]
         public string UserName { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        ///ADDED a required attribute to the password hash
+        [Required]
+        public string PasswordHash { get; set; }
+        /// ////
+        
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
         public string Email { get; set; }
         public DateTime DateOfBirth { get; set; }
 
