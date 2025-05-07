@@ -8,7 +8,7 @@ public class BMITest
 {
     [TestMethod]
  
-    public void ConvertHeightToInches_ShouldReturn63_WhenHeightIs5Feet3Inches()
+    public void ConvertHeightToInchesTest()
     {
         // Arrange
         double weight = 150; // Weight is irrelevant for this test
@@ -22,8 +22,16 @@ public class BMITest
         // Assert
         Assert.AreEqual(63.0, result);
     }
-    
 
+    [TestMethod]
+    public void CalculateTest()
+    {
+        // Arrange
+        double weight = 150; // Weight is irrelevant for this test
+        double heightFeet = 5;
+        double heightInches = 3;
+        BMI bmi = new BMI(weight, heightFeet, heightInches);
 
+    }
 
 }
