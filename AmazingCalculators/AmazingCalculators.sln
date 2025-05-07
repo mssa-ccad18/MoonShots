@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingCalculators", "AmazingCalculators\AmazingCalculators.csproj", "{772477F3-3135-464A-BA0E-D8A11F2B574D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingCalculatorLibrary", "AmazingCalculatorLibrary\AmazingCalculatorLibrary.csproj", "{56C3BA54-53D4-43F5-A080-BBAFB2F98CE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingCalculatorsTest", "AmazingCalculatorsTest\AmazingCalculatorsTest.csproj", "{4E344AFA-4561-42E7-9C55-BB21F586EAAC}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingCalcRazorPage", "AmazingCalcRazorPage\AmazingCalcRazorPage.csproj", "{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}"
 EndProject
 Global
@@ -68,8 +72,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A7C64E05-82AF-45E7-BB27-4A78A1F1B95D}
 	EndGlobalSection
 EndGlobal
