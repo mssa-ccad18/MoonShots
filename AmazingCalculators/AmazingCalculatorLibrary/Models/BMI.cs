@@ -47,7 +47,7 @@ namespace AmazingCalculatorLibrary.Models
             return "obese";
 
         }
-        public double TestConvertHeightToInches()
+        public double TestConvertHeightToInches() //wrapper method to public method
         {
             return ConvertHeightToInches();
         }
