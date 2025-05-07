@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingCalculatorLibrary", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingCalculatorsTest", "AmazingCalculatorsTest\AmazingCalculatorsTest.csproj", "{4E344AFA-4561-42E7-9C55-BB21F586EAAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingCalcRazorPage", "AmazingCalcRazorPage\AmazingCalcRazorPage.csproj", "{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,8 +60,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {55F2C93B-AC95-4452-9D41-35CD6C1B5487}
 	EndGlobalSection
 EndGlobal
