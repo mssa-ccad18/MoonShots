@@ -8,6 +8,6 @@ namespace AmazingCalculatorLibrary.Models
 {
     internal class BMI
     {
-
+        //test
     }
 }
