@@ -13,5 +13,7 @@ namespace AmazingCalculatorLibrary.Models
 
         public DbSet<UserProfiles> UserProfiles { get; set; }
         public DbSet<WorkoutSession> WorkoutSessions { get; set; }
+        public DbSet<Demo> Demo{ get; set; }
+
     }
 }

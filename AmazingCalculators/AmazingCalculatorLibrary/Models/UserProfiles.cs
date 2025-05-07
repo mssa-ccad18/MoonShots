@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AmazingCalculatorLibrary.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AmazingCalculatorLibrary.Models
 {
     public class UserProfiles
     {
 
+        [Key]
         public int UserId { get; set; } // Unique identifier for the user profile
 
         // User details
