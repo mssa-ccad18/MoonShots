@@ -24,45 +24,47 @@ namespace AmazingCalculatorLibrary.AdvancedTrackingFeatures
                 .OrderByDescending(w => w.WorkoutDate)
                 .ToList();
 
-            Console.WriteLine("\n Workout History:");
-            foreach (var workout in workouts)
-            {
-                Console.WriteLine($"- {workout.WorkoutDate.ToShortDateString()}: {workout.WorkoutType} for {workout.DurationInMinutes} min, burned {workout.CaloriesBurned} kcal");
-            }
+            //CoPilot suggested this. We have modified this code to use properties in BMI and BMR, and anticipate CalorieBurnedTracker to
 
-            // Main Static Method that takes user input and calculates BMI and calories burned
-            static void Main()
-            {
-                Console.WriteLine("🏋️ Welcome to Your Real-Time Fitness Dashboard!");
+            //Console.WriteLine("\n Workout History:");
+            //foreach (var workout in workouts)
+            //{
+            //    Console.WriteLine($"- {workout.WorkoutDate.ToShortDateString()}: {workout.WorkoutType} for {workout.DurationInMinutes} min, burned {workout.CaloriesBurned} kcal");
+            //}
 
-                // Get user input
-                Console.Write("Enter weight (kg): ");
-                double weight = Convert.ToDouble(Console.ReadLine());
+            //// Main Static Method that takes user input and calculates BMI and calories burned
+            //static void Main()
+            //{
+            //    Console.WriteLine("🏋️ Welcome to Your Real-Time Fitness Dashboard!");
 
-                Console.Write("Enter height (meters): ");
-                double height = Convert.ToDouble(Console.ReadLine());
+            //    // Get user input
+            //    Console.Write("Enter weight (kg): ");
+            //    double weight = Convert.ToDouble(Console.ReadLine());
 
-                Console.Write("Enter activity type (Running, Cycling, Swimming, Walking): ");
-                string activity = Console.ReadLine();
+            //    Console.Write("Enter height (meters): ");
+            //    double height = Convert.ToDouble(Console.ReadLine());
 
-                Console.Write("Enter workout duration (minutes): ");
-                double duration = Convert.ToDouble(Console.ReadLine());
+            //    Console.Write("Enter activity type (Running, Cycling, Swimming, Walking): ");
+            //    string activity = Console.ReadLine();
 
-                // Calculate values
-                double bmi = BMI.Calculate(weight, height);
-                string bmiCategory = BMI.GetCategory(bmi);
-                double caloriesBurned = CalorieBurnedTracker.CalculateCaloriesBurned(activity, duration, weight);
+            //    Console.Write("Enter workout duration (minutes): ");
+            //    double duration = Convert.ToDouble(Console.ReadLine());
 
-                // Real-time progress display simulation
-                Console.WriteLine("\n⌛ Calculating progress...");
-                Thread.Sleep(2000);  // Simulate processing delay
+            //    // Calculate values
+            //    double bmi = BMI.Calculate(weight, height);
+            //    string bmiCategory = BMI.GetCategory(bmi);
+            //    double caloriesBurned = CalorieBurnedTracker.CalculateCaloriesBurned(activity, duration, weight);
 
-                Console.WriteLine("\n📊 Your Fitness Stats:");
-                Console.WriteLine($"- BMI: {bmi:F2} ({bmiCategory})");
-                Console.WriteLine($"- Calories Burned: {caloriesBurned:F2} kcal from {activity}");
+            //    // Real-time progress display simulation
+            //    Console.WriteLine("\n⌛ Calculating progress...");
+            //    Thread.Sleep(2000);  // Simulate processing delay
 
-                Console.WriteLine("\n🔥 Stay consistent and keep moving!");
-            }
+            //    Console.WriteLine("\n📊 Your Fitness Stats:");
+            //    Console.WriteLine($"- BMI: {bmi:F2} ({bmiCategory})");
+            //    Console.WriteLine($"- Calories Burned: {caloriesBurned:F2} kcal from {activity}");
+
+            //    Console.WriteLine("\n🔥 Stay consistent and keep moving!");
+            //}
         }
     }
 }
