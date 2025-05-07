@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingCalculators", "AmazingCalculators\AmazingCalculators.csproj", "{772477F3-3135-464A-BA0E-D8A11F2B574D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingCalcRazorPage", "AmazingCalcRazorPage\AmazingCalcRazorPage.csproj", "{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +29,23 @@ Global
 		{772477F3-3135-464A-BA0E-D8A11F2B574D}.Release|x64.Build.0 = Release|Any CPU
 		{772477F3-3135-464A-BA0E-D8A11F2B574D}.Release|x86.ActiveCfg = Release|Any CPU
 		{772477F3-3135-464A-BA0E-D8A11F2B574D}.Release|x86.Build.0 = Release|Any CPU
+		{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}.Debug|x64.Build.0 = Debug|Any CPU
+		{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}.Debug|x86.Build.0 = Debug|Any CPU
+		{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}.Release|x64.ActiveCfg = Release|Any CPU
+		{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}.Release|x64.Build.0 = Release|Any CPU
+		{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}.Release|x86.ActiveCfg = Release|Any CPU
+		{D37E6BB6-C985-4095-B7C7-B9F20DC8C8F6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7C64E05-82AF-45E7-BB27-4A78A1F1B95D}
 	EndGlobalSection
 EndGlobal
