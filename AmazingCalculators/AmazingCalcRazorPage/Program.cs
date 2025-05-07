@@ -1,7 +1,14 @@
+using AmazingCalculatorLibrary.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+// Add services to the container.//this will add the static assets
+builder.Services.AddDbContext<FitnessDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 
