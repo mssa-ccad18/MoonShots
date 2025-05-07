@@ -1,6 +1,6 @@
 using AmazingCalculatorLibrary.Models;
-
 using Microsoft.EntityFrameworkCore;
+using AmazingCalculatorLibrary.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +11,8 @@ builder.Services.AddDbContext<FitnessDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly("AmazingCalcRazorPage")));
+builder.Services.AddScoped<AuthServices>();
+
 
 
 //// Add EF Core service for database connection that is from the appsettings.json file
