@@ -483,3 +483,5 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 /.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
+/.vs/VSWorkspaceState.json
