@@ -10,12 +10,15 @@ namespace AmazingCalculatorLibrary.Models
     {
         public double Weight { get; set; }
         public double Height { get; set; }
+
+        public bool IsMale { get; set; }
         public string ActivityLevel { get; set; }
 
-        public User(double weight, double height, string activityLevel)
+        public User(double weight, double height, bool isMale, string activityLevel)
         {
             Weight = weight;
             Height = height;
+            IsMale = isMale;
             ActivityLevel = activityLevel.ToLower();
         }
     }

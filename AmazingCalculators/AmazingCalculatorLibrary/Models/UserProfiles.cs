@@ -27,10 +27,12 @@ namespace AmazingCalculatorLibrary.Models
         [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
 
+
         // Health and fitness data (optional at registration)
         public double? HeightInInches { get; set; }
         public double? WeightInPounds { get; set; }
         public double? BMI { get; set; }
+
 
         public int? ActivityLevel { get; set; } // 1: Sedentary, etc.
 
