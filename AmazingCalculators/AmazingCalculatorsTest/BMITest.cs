@@ -1,37 +1,32 @@
-//using AmazingCalculatorLibrary.Models;
+using AmazingCalculatorLibrary.Models;
 
-//namespace AmazingCalculatorsTest;
+namespace AmazingCalculatorsTest;
 
-//[TestClass]
-//public class BMITest
+[TestClass]
+public class BMITest
+{
+    [TestMethod]
+    public void UpdateUserProfileWithBMI_ShouldUpdatePropertiesCorrectly()
+    {
+        // Arrange
+        var bmi = new BMI(150, 5, 3, true); // Weight: 150 lbs, Height: 5'3", Male
+        var userProfile = new UserProfiles
+        {
+            UserId = 1,
+            UserName = "TestUser",
+            WeightInPounds = null,
+            HeightInInches = null,
+            BMIValue = null,
+            BMICategory = null
+        };
 
-//{
-//    [TestMethod]
+        // Act
+        userProfile.UpdateFromBMI(bmi);
 
-//    public void ConvertHeightToInchesTest()
-//    {
-//        // Arrange
-//        double weight = 150; // Weight is irrelevant for this test
-//        double heightFeet = 5;
-//        double heightInches = 3;
-//        BMI bmi = new BMI(weight, heightFeet, heightInches);
-
-//        // Act
-//        var result = bmi.TestConvertHeightToInches();
-
-//        // Assert
-//        Assert.AreEqual(63.0, result);
-//    }
-
-//    [TestMethod]
-//    public void CalculateTest()
-//    {
-//        // Arrange
-//        double weight = 150; // Weight is irrelevant for this test
-//        double heightFeet = 5;
-//        double heightInches = 3;
-//        BMI bmi = new BMI(weight, heightFeet, heightInches);
-
-//    }
-
-//}
+        // Assert
+        Assert.AreEqual(bmi.WeightLbs, userProfile.WeightInPounds, "WeightInPounds should match BMI.WeightLbs");
+        Assert.AreEqual(bmi.HeightFeet * 12 + bmi.HeightInches, userProfile.HeightInInches, "HeightInInches should match BMI height in inches");
+        Assert.AreEqual(bmi.BMIValue, userProfile.BMIValue, "BMIValue should match BMI.BMIValue");
+        Assert.AreEqual(bmi.BMICategory, userProfile.BMICategory, "BMICategory should match BMI.BMICategory");
+    }
+}

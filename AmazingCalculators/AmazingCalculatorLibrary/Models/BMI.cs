@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AmazingCalculatorLibrary;
+using AmazingCalculatorLibrary.Models;
 
 
 
@@ -24,9 +24,8 @@ namespace AmazingCalculatorLibrary.Models
             double weighinKG = user.WeightInPounds * 0.45;
             double heightInCM = user.HeightInInches;
             bool ismale = user.IsMale;
-            
-        }*/
 
+        }*/
         public BMI(double weightLbs, double heightFeet, double heightInches, bool ismale)
         {
             WeightLbs = weightLbs;
@@ -67,7 +66,7 @@ namespace AmazingCalculatorLibrary.Models
 
             }
         }
-        
+
     }
 
 

@@ -54,5 +54,16 @@ namespace AmazingCalculatorLibrary.Models
 
         // Progress Tracking
         public List<WorkoutSession> WorkoutHistory { get; set; } = new();
+
+        public void UpdateFromBMI(BMI bmi)
+        {
+            if (bmi == null) throw new ArgumentNullException(nameof(bmi));
+
+            WeightInPounds = bmi.WeightLbs;
+            HeightInInches = bmi.HeightFeet * 12 + bmi.HeightInches; // Convert height to inches
+            BMIValue = bmi.BMIValue;
+            BMICategory = bmi.BMICategory;
+        }
+
     }
 }
