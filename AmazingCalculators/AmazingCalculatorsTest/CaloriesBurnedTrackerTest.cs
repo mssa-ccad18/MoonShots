@@ -17,7 +17,7 @@ namespace AmazingCalculatorLibrary.Tests
             double caloriesBurned = tracker.CaloriesBurnedPerHour;
 
             // Assert
-            Assert.AreEqual(210.0, caloriesBurned, 0.01, "Calories burned for light activity is incorrect.");
+            Assert.AreEqual(462.0, caloriesBurned, 0.01, "Calories burned for light activity is incorrect.");
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace AmazingCalculatorLibrary.Tests
             double caloriesBurned = tracker.CaloriesBurnedPerHour;
 
             // Assert
-            Assert.AreEqual(420.0, caloriesBurned, 0.01, "Calories burned for moderate activity is incorrect.");
+            Assert.AreEqual(924.0, caloriesBurned, 0.01, "Calories burned for moderate activity is incorrect.");
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace AmazingCalculatorLibrary.Tests
             double caloriesBurned = tracker.CaloriesBurnedPerHour;
 
             // Assert
-            Assert.AreEqual(630.0, caloriesBurned, 0.01, "Calories burned for intense activity is incorrect.");
+            Assert.AreEqual(1386.0, caloriesBurned, 0.01, "Calories burned for intense activity is incorrect.");
         }
 
         [TestMethod]

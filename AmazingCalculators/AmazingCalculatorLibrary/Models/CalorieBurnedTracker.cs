@@ -19,7 +19,7 @@ namespace AmazingCalculatorLibrary.Models
         {
             userProfiles.WeightInPounds = weightInPounds;
             userProfiles.HeightInInches = heightInInches;
-            IsMale = isMale;
+            userProfiles.IsMale = isMale;
             userProfiles.ActivityLevel = activityLevel.ToLower();
         }
 
