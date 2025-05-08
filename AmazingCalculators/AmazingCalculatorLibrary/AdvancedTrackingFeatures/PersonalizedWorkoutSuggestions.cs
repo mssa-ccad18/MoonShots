@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AmazingCalculatorLibrary.AdvancedTrackingFeatures
 {
-    internal class PersonalizedWorkoutSuggestions
+    public class PersonalizedWorkoutSuggestions
     {
         private readonly UserProfiles userProfile;
 
