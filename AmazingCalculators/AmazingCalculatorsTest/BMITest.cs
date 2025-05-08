@@ -7,7 +7,7 @@
 
 //{
 //    [TestMethod]
- 
+
 //    public void ConvertHeightToInchesTest()
 //    {
 //        // Arrange
@@ -17,7 +17,7 @@
 //        BMI bmi = new BMI(weight, heightFeet, heightInches);
 
 //        // Act
-//        var result = bmi.TestConvertHeightToInches(); 
+//        var result = bmi.TestConvertHeightToInches();
 
 //        // Assert
 //        Assert.AreEqual(63.0, result);

@@ -27,6 +27,8 @@ namespace AmazingCalculatorLibrary.Models
         [DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
 
+        public bool IsMale { get; set; }
+
 
         // Health and fitness data (optional at registration)
         public double? HeightInInches { get; set; }
