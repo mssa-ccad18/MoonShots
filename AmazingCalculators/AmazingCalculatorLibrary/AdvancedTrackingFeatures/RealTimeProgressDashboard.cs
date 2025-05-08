@@ -1,28 +1,28 @@
-﻿using AmazingCalculatorLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using AmazingCalculatorLibrary.Models;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-namespace AmazingCalculatorLibrary.AdvancedTrackingFeatures
-{
-    public class RealTimeProgressDashboard
-    {
-        // Method that reads the input from the WorkoutSession SQL database
-        private readonly FitnessDbContext _context;
+//namespace AmazingCalculatorLibrary.AdvancedTrackingFeatures
+//{
+//    public class RealTimeProgressDashboard
+//    {
+//        // Method that reads the input from the WorkoutSession SQL database
+//        private readonly FitnessDbContext _context;
 
-        public RealTimeProgressDashboard(FitnessDbContext context)
-        {
-            _context = context;
-        }
+//        public RealTimeProgressDashboard(FitnessDbContext context)
+//        {
+//            _context = context;
+//        }
 
-        public void DisplayWorkoutHistory(int userId)
-        {
-            var workouts = _context.WorkoutSessions
-                .Where(w => w.UserId == userId)
-                .OrderByDescending(w => w.WorkoutDate)
-                .ToList();
+//        public void DisplayWorkoutHistory(int userId)
+//        {
+//            var workouts = _context.WorkoutSessions
+//                .Where(w => w.UserId == userId)
+//                .OrderByDescending(w => w.WorkoutDate)
+//                .ToList();
 
             //CoPilot suggested this. We have modified this code to use properties in BMI and BMR, and anticipate CalorieBurnedTracker to
 
@@ -65,7 +65,7 @@ namespace AmazingCalculatorLibrary.AdvancedTrackingFeatures
 
             //    Console.WriteLine("\n🔥 Stay consistent and keep moving!");
             //}
-        }
-    }
-}
+//        }
+//    }
+//}
 

@@ -1,3 +1,4 @@
+using AmazingCalcRazorPage.ViewModels;
 using AmazingCalculatorLibrary.Models;
 using AmazingCalculatorLibrary.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,34 +19,34 @@ namespace AmazingCalcRazorPage.Pages
         }
 
         [BindProperty]
-        public string UserName { get; set; }
-
-        [BindProperty]
-        public string Password { get; set; }
-
-        [BindProperty]
-        public string Email { get; set; }
+        public UserCredentials Credentials { get; set; }
 
         public string Message { get; set; }
 
-        public void OnGet()
-        {
-        }
-
         public IActionResult OnPost(string action)
         {
+            if (!ModelState.IsValid)
+            {
+                Message = "Please complete all required fields.";
+                return Page();
+            }
+
             if (action == "register")
             {
-                var result = _authService.RegisterUser(UserName, Password, Email);
+                var result = _authService.RegisterUser(
+                    Credentials.UserName,
+                    Credentials.Password,
+                    Credentials.Email ?? ""
+                );
                 Message = result ? "Registration successful!" : "Username already exists.";
             }
             else if (action == "login")
             {
-                var result = _authService.LoginUser(UserName, Password);
-                Message = result ? $"Welcome back, {UserName}!" : "Invalid username or password.";
+                var result = _authService.LoginUser(Credentials.UserName, Credentials.Password);
+                Message = result ? $"Welcome back, {Credentials.UserName}!" : "Invalid username or password.";
             }
 
-            return Page(); // redisplay form with message
+            return Page();
         }
     }
 }
