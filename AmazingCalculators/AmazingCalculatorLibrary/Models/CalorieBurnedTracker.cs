@@ -22,43 +22,53 @@ namespace AmazingCalculatorLibrary.Models
             ActivityLevel = activityLevel.ToLower();
         }
     }
-    class CalorieBurnedTracker
+    public class CalorieBurnedTracker
     {
-        static void Main()
+        public double WeightKg { get; set; }
+        public double HeightCm { get; set; }
+        public bool IsMale { get; set; }
+        public string ActivityLevel { get; set; }
+
+        public CalorieBurnedTracker(double weightKg, double heightCm, bool isMale, string activityLevel)
         {
-            // Example user
-            User user = new User(70, 175, "moderate"); // Assume weight in kg, height in cm
+            WeightKg = weightKg;
+            HeightCm = heightCm;
+            IsMale = isMale;
+            ActivityLevel = activityLevel.ToLower();
+        }
 
-            double caloriesBurned = CalculateCalories(user);
+        private double GetMetabolicEquivalent()
+        {
+            return ActivityLevel switch
+            {
+                "light" => 3.0,
+                "moderate" => 6.0,
+                "intense" => 9.0,
+                _ => throw new ArgumentException("Invalid activity level. Valid options are: light, moderate, intense.")
+            };
+        }
 
-            if (caloriesBurned > 0)
+        public double CaloriesBurnedPerHour
+        {
+            get
             {
-                Console.WriteLine($"Estimated calories burned per hour: {caloriesBurned:F2} kcal");
-            }
-            else
-            {
-                Console.WriteLine("Invalid activity level assigned.");
+                double metabolicEquivalent = GetMetabolicEquivalent();
+                return metabolicEquivalent * WeightKg;
             }
         }
-        static double CalculateCalories(User user)
-        {
-            double metabolicEquivalent;
 
-            switch (user.ActivityLevel)
+        public string ActivityCategory
+        {
+            get
             {
-                case "light":
-                    metabolicEquivalent = 3.0;
-                    break;
-                case "moderate":
-                    metabolicEquivalent = 6.0;
-                    break;
-                case "intense":
-                    metabolicEquivalent = 9.0;
-                    break;
-                default:
-                    return -1; // Error case
+                return ActivityLevel switch
+                {
+                    "light" => "Light Activity",
+                    "moderate" => "Moderate Activity",
+                    "intense" => "Intense Activity",
+                    _ => "Unknown Activity"
+                };
             }
-            return metabolicEquivalent * user.Weight;
         }
     }
 }
