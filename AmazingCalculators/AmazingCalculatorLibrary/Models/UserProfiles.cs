@@ -33,7 +33,8 @@ namespace AmazingCalculatorLibrary.Models
         // Health and fitness data (optional at registration)
         public double? HeightInInches { get; set; }
         public double? WeightInPounds { get; set; }
-        public double? BMI { get; set; }
+        public double? BMIValue { get; set; } // Calculated from height and weight
+        public string? BMICategory { get; set; } // e.g., Underweight, Normal weight, Overweight, Obesity
 
 
         public int? ActivityLevel { get; set; } // 1: Sedentary, etc.
