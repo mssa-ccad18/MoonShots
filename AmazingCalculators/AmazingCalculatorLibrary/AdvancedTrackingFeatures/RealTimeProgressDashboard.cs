@@ -1,52 +1,82 @@
 
-//using AmazingCalculatorLibrary.Models;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+using AmazingCalculatorLibrary.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace AmazingCalculatorLibrary.AdvancedTrackingFeatures
-//{
-//    public class RealTimeProgressDashboard
-//    {
-//        // Method that reads the input from the WorkoutSession SQL database
-//        private readonly FitnessDbContext _context;
+namespace AmazingCalculatorLibrary.AdvancedTrackingFeatures
+{
+    public class RealTimeProgressDashboard
+    {
+        // Method that reads the input from the WorkoutSession SQL database
+        private readonly FitnessDbContext _context;
 
 
-//        public RealTimeProgressDashboard(FitnessDbContext context)
-//        {
-//            _context = context;
-//        }
+        public RealTimeProgressDashboard(FitnessDbContext context)
+        {
+            _context = context;
+        }
+        public void DisplayWorkoutHistory(int userId)
+        {
+            var userProfile = _context.UserProfiles
+                .FirstOrDefault(u => u.UserId == userId);
 
-//        public void DisplayWorkoutHistory(int userId)
-//        {
-//            var workouts = _context.WorkoutSessions
-//                .Where(w => w.UserId == userId)
-//                .OrderByDescending(w => w.WorkoutDate)
-//                .ToList();
+            if (userProfile == null)
+            {
+                Console.WriteLine("User not found.");
+                return;
+            }
 
-            //CoPilot suggested this. We have modified this code to use properties in BMI and BMR, and anticipate CalorieBurnedTracker to
+            // Access BMI
+            var bmi = userProfile.BMIValue;
 
-            //Console.WriteLine("\n Workout History:");
-            //foreach (var workout in workouts)
-            //{
-            //    Console.WriteLine($"- {workout.WorkoutDate.ToShortDateString()}: {workout.WorkoutType} for {workout.DurationInMinutes} min, burned {workout.CaloriesBurned} kcal");
-            //}
+            // Calculate BMR (if not stored, you can calculate it here)
+            // Example formula for BMR (Mifflin-St Jeor Equation):
+            double? bmr = null;
+            if (userProfile.HeightInInches.HasValue && userProfile.WeightInPounds.HasValue && userProfile.DateOfBirth.HasValue)
+            {
+                var age = DateTime.Now.Year - userProfile.DateOfBirth.Value.Year;
+                if (userProfile.IsMale)
+                {
+                    bmr = 66 + (6.23 * userProfile.WeightInPounds.Value) + (12.7 * userProfile.HeightInInches.Value) - (6.8 * age);
+                }
+                else
+                {
+                    bmr = 655 + (4.35 * userProfile.WeightInPounds.Value) + (4.7 * userProfile.HeightInInches.Value) - (4.7 * age);
+                }
+            }
 
-            //// Main Static Method that takes user input and calculates BMI and calories burned
-            //static void Main()
-            //{
-            //    Console.WriteLine("🏋️ Welcome to Your Real-Time Fitness Dashboard!");
+            // Calculate total calories burned from workout history
+            var totalCaloriesBurned = userProfile.WorkoutHistory?.Sum(w => w.CaloriesBurned) ?? 0;
 
-            //    // Get user input
-            //    Console.Write("Enter weight (kg): ");
-            //    double weight = Convert.ToDouble(Console.ReadLine());
+            // Access workout history
+            var workouts = userProfile.WorkoutHistory;
 
-            //    Console.WriteLine("\n🔥 Stay consistent and keep moving!");
-            //}
-//        }
-//    }
-//}
+            // Display the information
+            Console.WriteLine($"BMI: {bmi}");
+            Console.WriteLine($"BMR: {bmr}");
+            Console.WriteLine($"Total Calories Burned: {totalCaloriesBurned}");
+            Console.WriteLine("Workout History:");
+            if (workouts != null)
+            {
+                foreach (var workout in workouts)
+                {
+                    Console.WriteLine($"- {workout.WorkoutDate.ToShortDateString()}: {workout.WorkoutType}, {workout.DurationInMinutes} mins, {workout.CaloriesBurned} calories");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No workouts found.");
+            }
+        }
+
+
+
+
+         
+    }
+}
 
 
