@@ -43,10 +43,17 @@ namespace AmazingCalcRazorPage.Pages
             else if (action == "login")
             {
                 var result = _authService.LoginUser(Credentials.UserName, Credentials.Password);
-                Message = result ? $"Welcome back, {Credentials.UserName}!" : "Invalid username or password.";
+                if (result)
+                {
+                    //  redirect to the Home Page Razor Page
+                    return RedirectToPage("/HomePage");
+                }
+
+                Message = "Invalid username or password.";
             }
 
-            return Page();
+            return Page(); // fallback
         }
+
     }
 }
