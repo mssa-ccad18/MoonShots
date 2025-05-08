@@ -1,4 +1,164 @@
-﻿@page
+﻿@* @page *@
+@* @model AmazingCalcRazorPage.Pages.UserProfilePageModel *@
+@* @{ *@
+@*     ViewData["Title"] = "User Profile"; *@
+@* } *@
+
+@* <h1>User Profile</h1> *@
+
+@* <form method="post"> *@
+@*     <div> *@
+@*         <label for="userName">Username:</label> *@
+@*         <input type="text" id="userName" asp-for="UserProfile.UserName" required> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="firstName">First Name:</label> *@
+@*         <input type="text" id="firstName" asp-for="UserProfile.FirstName"> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="lastName">Last Name:</label> *@
+@*         <input type="text" id="lastName" asp-for="UserProfile.LastName"> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="email">Email:</label> *@
+@*         <input type="email" id="email" asp-for="UserProfile.Email"> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="dateOfBirth">Date of Birth:</label> *@
+@*         <input type="date" id="dateOfBirth" asp-for="UserProfile.DateOfBirth"> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="height">Height (in inches):</label> *@
+@*         <input type="number" id="height" asp-for="UserProfile.HeightInInches"> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="weight">Weight (in pounds):</label> *@
+@*         <input type="number" id="weight" asp-for="UserProfile.WeightInPounds"> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="activityLevel">Activity Level:</label> *@
+@*         <select id="activityLevel" asp-for="UserProfile.ActivityLevel"> *@
+@*             <option value="1">Sedentary</option> *@
+@*             <option value="2">Lightly Active</option> *@
+@*             <option value="3">Moderately Active</option> *@
+@*             <option value="4">Very Active</option> *@
+@*         </select> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="goalType">Fitness Goal:</label> *@
+@*         <input type="text" id="goalType" asp-for="UserProfile.GoalType"> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="goalTargetDate">Goal Target Date:</label> *@
+@*         <input type="date" id="goalTargetDate" asp-for="UserProfile.GoalTargetDate"> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="isVegan">Vegan:</label> *@
+@*         <input type="checkbox" id="isVegan" asp-for="UserProfile.IsVegan"> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="isVegetarian">Vegetarian:</label> *@
+@*         <input type="checkbox" id="isVegetarian" asp-for="UserProfile.IsVegetarian"> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="isGlutenFree">Gluten Free:</label> *@
+@*         <input type="checkbox" id="isGlutenFree" asp-for="UserProfile.IsGlutenFree"> *@
+@*     </div> *@
+
+@*     <div> *@
+@*         <label for="isDairyFree">Dairy Free:</label> *@
+@*         <input type="checkbox" id="isDairyFree" asp-for="UserProfile.IsDairyFree"> *@
+@*     </div> *@
+
+@*     <button type="submit">Save Profile</button> *@
+@* </form> *@
+
+@* <a asp-page="/HomePage" class="custom-btn">Home</a> *@
+
+@page
 @model AmazingCalcRazorPage.Pages.UserProfilePageModel
 @{
+    ViewData["Title"] = "User Profile";
+}
+
+<h2>User Profile</h2>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
+
+@if (Model.UserProfile != null)
+{
+    <form method="post">
+        <div class="form-group">
+            <label>First Name</label>
+            <input asp-for="UserProfile.FirstName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input asp-for="UserProfile.LastName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Date of Birth</label>
+            <input asp-for="UserProfile.DateOfBirth" type="date" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Height (in inches)</label>
+            <input asp-for="UserProfile.HeightInInches" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Weight (in pounds)</label>
+            <input asp-for="UserProfile.WeightInPounds" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Activity Level</label>
+            <input asp-for="UserProfile.ActivityLevel" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Goal Type</label>
+            <input asp-for="UserProfile.GoalType" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Goal Target Date</label>
+            <input asp-for="UserProfile.GoalTargetDate" type="date" class="form-control" />
+        </div>
+
+        <div class="form-check">
+            <input asp-for="UserProfile.IsVegan" class="form-check-input" />
+            <label class="form-check-label">Vegan</label>
+        </div>
+        <div class="form-check">
+            <input asp-for="UserProfile.IsVegetarian" class="form-check-input" />
+            <label class="form-check-label">Vegetarian</label>
+        </div>
+        <div class="form-check">
+            <input asp-for="UserProfile.IsGlutenFree" class="form-check-input" />
+            <label class="form-check-label">Gluten-Free</label>
+        </div>
+        <div class="form-check">
+            <input asp-for="UserProfile.IsDairyFree" class="form-check-input" />
+            <label class="form-check-label">Dairy-Free</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Save Profile</button>
+    </form>
+}
+else
+{
+    <div class="alert alert-warning">
+        You must be logged in to view this page. <a asp-page="/Login">Login</a>
+    </div>
 }
