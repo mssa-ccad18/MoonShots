@@ -3,26 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AmazingCalculatorLibrary;
+using User
+
 
 namespace AmazingCalculatorLibrary.Models
 {
     public class BMI
     {
 
-        public double WeightLbs { get; set; }
+        /*public double WeightLbs { get; set; }
         public double HeightFeet { get; set; }
         public double HeightInches { get; set; }
         public double HeightInCm => (HeightFeet * 30.48) + (HeightInches * 2.54);
         public double WeightKGs => WeightLbs * 0.45;
-        public bool IsMale { get; set; }
+        public bool IsMale { get; set; }*/
 
-        public BMI(double weightLbs, double heightFeet, double heightInches, bool ismale)
+        public static double GetBmi(UserProfiles user, UserProfiles , bool isMale)
+        {
+
+        }
+
+        /*public BMI(double weightLbs, double heightFeet, double heightInches, bool ismale)
         {
             WeightLbs = weightLbs;
             HeightFeet = heightFeet;
             HeightInches = heightInches;
             IsMale = ismale;
-        }
+        }*/
 
         private double ConvertHeightToInches()
         {
