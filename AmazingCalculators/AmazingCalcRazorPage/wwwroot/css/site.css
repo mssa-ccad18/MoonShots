@@ -31,8 +31,8 @@ body {
 }
 
 /*Adding buttons for Home Page and User Profile.*/
-.custom-btn {
-    background-color: #4CAF50;
+/*.custom-btn {
+    background-color: blue;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -42,5 +42,5 @@ body {
 }
 
     .custom-btn:hover {
-        background-color: #45a049;
-    }
+        background-color: blue;
+    }*/

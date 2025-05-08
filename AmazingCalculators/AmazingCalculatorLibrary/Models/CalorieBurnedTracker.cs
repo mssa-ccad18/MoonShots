@@ -4,63 +4,69 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-//namespace AmazingCalculatorLibrary.Models
-//{
-//    class User
-//    {
-//        public double Weight { get; set; }
-//        public double Height { get; set; }
+namespace AmazingCalculatorLibrary.Models
+{
+    public class CalorieBurnedTracker
+    {
+        private readonly UserProfiles userProfiles;
 
-//        public bool IsMale { get; set; }
-//        public string ActivityLevel { get; set; }
+        public CalorieBurnedTracker(UserProfiles userProfiles)
+        {
+            this.userProfiles = userProfiles ?? throw new ArgumentNullException(nameof(userProfiles));
+        }
 
-//        public User(double weight, double height, bool isMale, string activityLevel)
-//        {
-//            Weight = weight;
-//            Height = height;
-//            IsMale = isMale;
-//            ActivityLevel = activityLevel.ToLower();
-//        }
-//    }
-//    class CalorieBurnedTracker
-//    {
-//        static void Main()
-//        {
-//            // Example user
-//            User user = new User(70, 175, "moderate"); // Assume weight in kg, height in cm
+        private double WeightKg => userProfiles.WeightInPounds.HasValue
+            ? userProfiles.WeightInPounds.Value * 0.453592
+            : throw new InvalidOperationException("Weight is not set in the user profile.");
 
-//            double caloriesBurned = CalculateCalories(user);
+        private string ActivityLevel
+        {
+            get
+            {
+                return userProfiles.ActivityLevel switch
+                {
+                    1 => "light",
+                    2 => "moderate",
+                    3 => "intense",
+                    _ => throw new ArgumentException("Invalid activity level. Valid options are: 1 (light), 2 (moderate), 3 (intense).")
+                };
+            }
+        }
 
-//            if (caloriesBurned > 0)
-//            {
-//                Console.WriteLine($"Estimated calories burned per hour: {caloriesBurned:F2} kcal");
-//            }
-//            else
-//            {
-//                Console.WriteLine("Invalid activity level assigned.");
-//            }
-//        }
-//        static double CalculateCalories(User user)
-//        {
-//            double metabolicEquivalent;
+        private double GetMetabolicEquivalent()
+        {
+            return ActivityLevel switch
+            {
+                "light" => 3.0,
+                "moderate" => 6.0,
+                "intense" => 9.0,
+                _ => throw new ArgumentException("Invalid activity level. Valid options are: light, moderate, intense.")
+            };
+        }
 
-//            switch (user.ActivityLevel)
-//            {
-//                case "light":
-//                    metabolicEquivalent = 3.0;
-//                    break;
-//                case "moderate":
-//                    metabolicEquivalent = 6.0;
-//                    break;
-//                case "intense":
-//                    metabolicEquivalent = 9.0;
-//                    break;
-//                default:
-//                    return -1; // Error case
-//            }
-//            return metabolicEquivalent * user.Weight;
-//        }
-//    }
-//}
+        public double CaloriesBurnedPerHour
+        {
+            get
+            {
+                double metabolicEquivalent = GetMetabolicEquivalent();
+                return metabolicEquivalent * WeightKg;
+            }
+        }
+
+        public string ActivityCategory
+        {
+            get
+            {
+                return ActivityLevel switch
+                {
+                    "light" => "Light Activity",
+                    "moderate" => "Moderate Activity",
+                    "intense" => "Intense Activity",
+                    _ => "Unknown Activity"
+                };
+            }
+        }
+    }
+}
 
 
