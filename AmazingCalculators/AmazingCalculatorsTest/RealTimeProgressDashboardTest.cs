@@ -17,18 +17,18 @@ namespace AmazingCalculatorsTest
         public void DisplayWorkoutHistory_ShouldDisplayCorrectData_Male()
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<FitnessDbContext>()
-                .UseInMemoryDatabase(databaseName: "TestDatabase")
+            var optionsMale = new DbContextOptionsBuilder<FitnessDbContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabaseMale")
                 .Options;
 
-            using var context = new FitnessDbContext(options);
+            using var contextMale = new FitnessDbContext(optionsMale);
 
             // Seed data
-            var user = new UserProfiles
+            var userMale = new UserProfiles
             {
                 UserId = 1,
-                UserName = "TestUser",
-                PasswordHash = "hashedpassword",
+                UserName = "TestUserMale",
+                PasswordHash = "hashedpassword1",
                 HeightInInches = 70,
                 WeightInPounds = 150,
                 DateOfBirth = new DateTime(1990, 1, 1),
@@ -55,10 +55,10 @@ namespace AmazingCalculatorsTest
                 }
             };
 
-            context.UserProfiles.Add(user);
-            context.SaveChanges();
+            contextMale.UserProfiles.Add(userMale);
+            contextMale.SaveChanges();
 
-            var dashboard = new RealTimeProgressDashboard(context);
+            var dashboard = new RealTimeProgressDashboard(contextMale);
 
             // Act
             dashboard.DisplayWorkoutHistory(1);
@@ -71,22 +71,22 @@ namespace AmazingCalculatorsTest
         public void DisplayWorkoutHistory_ShouldDisplayCorrectData_Female()
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<FitnessDbContext>()
-                .UseInMemoryDatabase(databaseName: "TestDatabase")
+            var optionsFemale = new DbContextOptionsBuilder<FitnessDbContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabaseFemale")
                 .Options;
 
-            using var context = new FitnessDbContext(options);
+            using var contextFemale = new FitnessDbContext(optionsFemale);
 
             // Seed data
-            var user = new UserProfiles
+            var userFemale = new UserProfiles
             {
-                UserId = 1,
-                UserName = "TestUser",
-                PasswordHash = "hashedpassword",
+                UserId = 2,
+                UserName = "TestUserFemale",
+                PasswordHash = "hashedpassword2",
                 HeightInInches = 70,
                 WeightInPounds = 150,
                 DateOfBirth = new DateTime(1990, 1, 1),
-                IsMale = true,
+                IsMale = false,
                 BMIValue = 21.5,
                 WorkoutHistory = new List<WorkoutSession>
                 {
@@ -109,13 +109,13 @@ namespace AmazingCalculatorsTest
                 }
             };
 
-            context.UserProfiles.Add(user);
-            context.SaveChanges();
+            contextFemale.UserProfiles.Add(userFemale);
+            contextFemale.SaveChanges();
 
-            var dashboard = new RealTimeProgressDashboard(context);
+            var dashboard = new RealTimeProgressDashboard(contextFemale);
 
             // Act
-            dashboard.DisplayWorkoutHistory(1);
+            dashboard.DisplayWorkoutHistory(2);
 
             // Assert
             // Since the method writes to the console, you can redirect the console output and verify it if needed.
