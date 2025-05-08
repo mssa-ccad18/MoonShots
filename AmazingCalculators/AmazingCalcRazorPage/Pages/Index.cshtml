@@ -4,27 +4,9 @@
     ViewData["Title"] = "Welcome";
 }
 
-<h2 class="text-center">Fitness Tracker Login / Registration</h2>
-<a asp-page="/HomePage" class="btn btn-link">Go to Home Page</a>
+<h1 class="text-center">Welcome to Amazing Fitness Calculator</h1>
 
-@if (!string.IsNullOrEmpty(Model.Message))
-{
-    <div class="alert alert-info">@Model.Message</div>
-}
-
-<form method="post">
-    <div class="form-group">
-        <label>Username</label>
-        <input asp-for="Credentials.UserName" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input asp-for="Credentials.Password" type="password" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Email (for registration)</label>
-        <input asp-for="Credentials.Email" class="form-control" />
-    </div>
-    <button type="submit" name="action" value="register" class="btn btn-primary">Register</button>
-    <button type="submit" name="action" value="login" class="btn btn-secondary">Login</button>
-</form>
+<div class="text-center mt-4">
+    <a asp-page="/Login" class="btn btn-success m-2">Login</a>
+    <a asp-page="/Register" class="btn btn-primary m-2">Register</a>
+</div>
