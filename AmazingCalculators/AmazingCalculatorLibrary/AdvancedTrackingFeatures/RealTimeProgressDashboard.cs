@@ -19,6 +19,11 @@ namespace AmazingCalculatorLibrary.AdvancedTrackingFeatures
             _context = context;
         }
 
+        public static double GetBMIValue(UserProfiles bmi);
+        {
+            BMIValue = bmi;
+        }
+
         // Properties to store progress data
         public double CurrentBMI { get; private set; }
         public string BMICategory { get; private set; }
