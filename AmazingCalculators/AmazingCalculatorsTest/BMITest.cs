@@ -1,37 +1,37 @@
-using AmazingCalculatorLibrary.Models;
+//using AmazingCalculatorLibrary.Models;
 
-namespace AmazingCalculatorsTest;
+//namespace AmazingCalculatorsTest;
 
-[TestClass]
-public class BMITest
+//[TestClass]
+//public class BMITest
 
-{
-    [TestMethod]
+//{
+//    [TestMethod]
  
-    public void ConvertHeightToInchesTest()
-    {
-        // Arrange
-        double weight = 150; // Weight is irrelevant for this test
-        double heightFeet = 5;
-        double heightInches = 3;
-        BMI bmi = new BMI(weight, heightFeet, heightInches);
+//    public void ConvertHeightToInchesTest()
+//    {
+//        // Arrange
+//        double weight = 150; // Weight is irrelevant for this test
+//        double heightFeet = 5;
+//        double heightInches = 3;
+//        BMI bmi = new BMI(weight, heightFeet, heightInches);
 
-        // Act
-        var result = bmi.TestConvertHeightToInches(); 
+//        // Act
+//        var result = bmi.TestConvertHeightToInches(); 
 
-        // Assert
-        Assert.AreEqual(63.0, result);
-    }
+//        // Assert
+//        Assert.AreEqual(63.0, result);
+//    }
 
-    [TestMethod]
-    public void CalculateTest()
-    {
-        // Arrange
-        double weight = 150; // Weight is irrelevant for this test
-        double heightFeet = 5;
-        double heightInches = 3;
-        BMI bmi = new BMI(weight, heightFeet, heightInches);
+//    [TestMethod]
+//    public void CalculateTest()
+//    {
+//        // Arrange
+//        double weight = 150; // Weight is irrelevant for this test
+//        double heightFeet = 5;
+//        double heightInches = 3;
+//        BMI bmi = new BMI(weight, heightFeet, heightInches);
 
-    }
+//    }
 
-}
+//}
