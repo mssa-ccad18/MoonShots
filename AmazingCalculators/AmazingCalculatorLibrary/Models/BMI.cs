@@ -9,7 +9,7 @@ using User
 
 namespace AmazingCalculatorLibrary.Models
 {
-    public class BMI
+    public class BMI 
     {
 
         /*public double WeightLbs { get; set; }
