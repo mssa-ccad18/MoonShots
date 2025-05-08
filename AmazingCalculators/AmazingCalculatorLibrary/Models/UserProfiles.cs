@@ -31,6 +31,8 @@ namespace AmazingCalculatorLibrary.Models
         public string Email { get; set; }
         public DateTime DateOfBirth { get; set; }
 
+        public bool IsMale { get; set; }
+
 
         // Health and fitness data
         public double HeightInInches { get; set; }
