@@ -11,39 +11,54 @@ namespace AmazingCalculatorLibrary.Tests
         public void TestCaloriesBurnedPerHour_LightActivity()
         {
             // Arrange
-            var tracker = new CalorieBurnedTracker(154, 69, true, "light"); // Weight in pounds, height in inches
+            var userProfile = new UserProfiles
+            {
+                WeightInPounds = 154,
+                ActivityLevel = 1 // Light activity
+            };
+            var tracker = new CalorieBurnedTracker(userProfile);
 
             // Act
             double caloriesBurned = tracker.CaloriesBurnedPerHour;
 
             // Assert
-            Assert.AreEqual(210.0, caloriesBurned, 0.01, "Calories burned for light activity is incorrect.");
+            Assert.AreEqual(462.0, caloriesBurned, 0.01, "Calories burned for light activity is incorrect.");
         }
 
         [TestMethod]
         public void TestCaloriesBurnedPerHour_ModerateActivity()
         {
             // Arrange
-            var tracker = new CalorieBurnedTracker(154, 69, true, "moderate");
+            var userProfile = new UserProfiles
+            {
+                WeightInPounds = 154,
+                ActivityLevel = 2 // Moderate activity
+            };
+            var tracker = new CalorieBurnedTracker(userProfile);
 
             // Act
             double caloriesBurned = tracker.CaloriesBurnedPerHour;
 
             // Assert
-            Assert.AreEqual(420.0, caloriesBurned, 0.01, "Calories burned for moderate activity is incorrect.");
+            Assert.AreEqual(924.0, caloriesBurned, 0.01, "Calories burned for moderate activity is incorrect.");
         }
 
         [TestMethod]
         public void TestCaloriesBurnedPerHour_IntenseActivity()
         {
             // Arrange
-            var tracker = new CalorieBurnedTracker(154, 69, true, "intense");
+            var userProfile = new UserProfiles
+            {
+                WeightInPounds = 154,
+                ActivityLevel = 3 // Intense activity
+            };
+            var tracker = new CalorieBurnedTracker(userProfile);
 
             // Act
             double caloriesBurned = tracker.CaloriesBurnedPerHour;
 
             // Assert
-            Assert.AreEqual(630.0, caloriesBurned, 0.01, "Calories burned for intense activity is incorrect.");
+            Assert.AreEqual(1386.0, caloriesBurned, 0.01, "Calories burned for intense activity is incorrect.");
         }
 
         [TestMethod]
@@ -51,7 +66,12 @@ namespace AmazingCalculatorLibrary.Tests
         public void TestInvalidActivityLevel_ThrowsException()
         {
             // Arrange
-            var tracker = new CalorieBurnedTracker(154, 69, true, "invalid");
+            var userProfile = new UserProfiles
+            {
+                WeightInPounds = 154,
+                ActivityLevel = 99 // Invalid activity level
+            };
+            var tracker = new CalorieBurnedTracker(userProfile);
 
             // Act
             _ = tracker.CaloriesBurnedPerHour;
@@ -63,7 +83,12 @@ namespace AmazingCalculatorLibrary.Tests
         public void TestActivityCategory_LightActivity()
         {
             // Arrange
-            var tracker = new CalorieBurnedTracker(154, 69, true, "light");
+            var userProfile = new UserProfiles
+            {
+                WeightInPounds = 154,
+                ActivityLevel = 1 // Light activity
+            };
+            var tracker = new CalorieBurnedTracker(userProfile);
 
             // Act
             string category = tracker.ActivityCategory;
@@ -76,7 +101,12 @@ namespace AmazingCalculatorLibrary.Tests
         public void TestActivityCategory_UnknownActivity()
         {
             // Arrange
-            var tracker = new CalorieBurnedTracker(154, 69, true, "unknown");
+            var userProfile = new UserProfiles
+            {
+                WeightInPounds = 154,
+                ActivityLevel = 99 // Invalid activity level
+            };
+            var tracker = new CalorieBurnedTracker(userProfile);
 
             // Act
             string category = tracker.ActivityCategory;
