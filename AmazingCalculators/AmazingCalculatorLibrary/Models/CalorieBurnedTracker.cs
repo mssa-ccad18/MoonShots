@@ -6,35 +6,21 @@ using System.Threading.Tasks;
 
 namespace AmazingCalculatorLibrary.Models
 {
-    class User
-    {
-        public double Weight { get; set; }
-        public double Height { get; set; }
-
-        public bool IsMale { get; set; }
-        public string ActivityLevel { get; set; }
-
-        public User(double weight, double height, bool isMale, string activityLevel)
-        {
-            Weight = weight;
-            Height = height;
-            IsMale = isMale;
-            ActivityLevel = activityLevel.ToLower();
-        }
-    }
     public class CalorieBurnedTracker
     {
-        public double WeightKg { get; set; }
+        UserProfiles userProfiles = new UserProfiles();
+
+        /*public double WeightKg { get; set; }
         public double HeightCm { get; set; }
         public bool IsMale { get; set; }
-        public string ActivityLevel { get; set; }
+        public string ActivityLevel { get; set; }*/
 
-        public CalorieBurnedTracker(double weightKg, double heightCm, bool isMale, string activityLevel)
+        public CalorieBurnedTracker(double weightInPounds, double heightInInches, bool isMale, string activityLevel)
         {
-            WeightKg = weightKg;
-            HeightCm = heightCm;
+            userProfiles.WeightInPounds = weightInPounds;
+            userProfiles.HeightInInches = heightInInches;
             IsMale = isMale;
-            ActivityLevel = activityLevel.ToLower();
+            userProfiles.ActivityLevel = activityLevel.ToLower();
         }
 
         private double GetMetabolicEquivalent()

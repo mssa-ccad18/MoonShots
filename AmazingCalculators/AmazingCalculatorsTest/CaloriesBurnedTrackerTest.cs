@@ -11,7 +11,7 @@ namespace AmazingCalculatorLibrary.Tests
         public void TestCaloriesBurnedPerHour_LightActivity()
         {
             // Arrange
-            var tracker = new CalorieBurnedTracker(70, 175, true, "light");
+            var tracker = new CalorieBurnedTracker(154, 69, true, "light"); // Weight in pounds, height in inches
 
             // Act
             double caloriesBurned = tracker.CaloriesBurnedPerHour;
@@ -24,7 +24,7 @@ namespace AmazingCalculatorLibrary.Tests
         public void TestCaloriesBurnedPerHour_ModerateActivity()
         {
             // Arrange
-            var tracker = new CalorieBurnedTracker(70, 175, true, "moderate");
+            var tracker = new CalorieBurnedTracker(154, 69, true, "moderate");
 
             // Act
             double caloriesBurned = tracker.CaloriesBurnedPerHour;
@@ -37,7 +37,7 @@ namespace AmazingCalculatorLibrary.Tests
         public void TestCaloriesBurnedPerHour_IntenseActivity()
         {
             // Arrange
-            var tracker = new CalorieBurnedTracker(70, 175, true, "intense");
+            var tracker = new CalorieBurnedTracker(154, 69, true, "intense");
 
             // Act
             double caloriesBurned = tracker.CaloriesBurnedPerHour;
@@ -51,7 +51,7 @@ namespace AmazingCalculatorLibrary.Tests
         public void TestInvalidActivityLevel_ThrowsException()
         {
             // Arrange
-            var tracker = new CalorieBurnedTracker(70, 175, true, "invalid");
+            var tracker = new CalorieBurnedTracker(154, 69, true, "invalid");
 
             // Act
             _ = tracker.CaloriesBurnedPerHour;
@@ -63,7 +63,7 @@ namespace AmazingCalculatorLibrary.Tests
         public void TestActivityCategory_LightActivity()
         {
             // Arrange
-            var tracker = new CalorieBurnedTracker(70, 175, true, "light");
+            var tracker = new CalorieBurnedTracker(154, 69, true, "light");
 
             // Act
             string category = tracker.ActivityCategory;
@@ -76,7 +76,7 @@ namespace AmazingCalculatorLibrary.Tests
         public void TestActivityCategory_UnknownActivity()
         {
             // Arrange
-            var tracker = new CalorieBurnedTracker(70, 175, true, "unknown");
+            var tracker = new CalorieBurnedTracker(154, 69, true, "unknown");
 
             // Act
             string category = tracker.ActivityCategory;
