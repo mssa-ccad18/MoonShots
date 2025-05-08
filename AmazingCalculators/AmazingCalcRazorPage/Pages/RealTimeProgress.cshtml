@@ -1,7 +1,110 @@
 ﻿@page
 @model AmazingCalcRazorPage.Pages.RealTimeProgressModel
+@using System.Text.Json
 @{
+    ViewData["Title"] = "Real-Time Progress Dashboard";
 }
 
-<a asp-page="/HomePage" class="custom-btn">Back to Home</a>
-<a asp-page="/UserProfilePage" class="custom-btn">Back to Profile</a>
+<h2 class="mb-4">Progress Dashboard</h2>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
+
+@if (Model.UserProfile != null)
+{
+    <div class="mb-4">
+        <h4>@Model.UserProfile.FirstName's Stats</h4>
+        <p><strong>BMI:</strong> @Model.BMI</p>
+        <p><strong>BMR:</strong> @Model.BMR</p>
+        <p><strong>Total Calories Burned:</strong> @Model.TotalCaloriesBurned</p>
+    </div>
+
+    <h5>Workout History</h5>
+    @if (Model.UserProfile.WorkoutHistory?.Count > 0)
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Workout Type</th>
+                    <th>Duration (min)</th>
+                    <th>Calories Burned</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var workout in Model.UserProfile.WorkoutHistory.OrderByDescending(w => w.WorkoutDate))
+                {
+                    <tr>
+                        <td>@workout.WorkoutDate.ToShortDateString()</td>
+                        <td>@workout.WorkoutType</td>
+                        <td>@workout.DurationInMinutes</td>
+                        <td>@workout.CaloriesBurned</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No workout history found.</p>
+    }
+
+    @if (Model.WorkoutSuggestions?.Count > 0)
+    {
+        <h5 class="mt-4">Suggested Workouts</h5>
+        <ul>
+            @foreach (var suggestion in Model.WorkoutSuggestions)
+            {
+                <li>@suggestion</li>
+            }
+        </ul>
+    }
+
+    <h5 class="mt-5">Calories Burned Over Time</h5>
+    <canvas id="calorieChart" width="400" height="200"></canvas>
+}
+else
+{
+    <div class="alert alert-danger">
+        User not found or not logged in.
+    </div>
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const labels = @Html.Raw(JsonSerializer.Serialize(Model.WorkoutDates ?? new List<string>()));
+        const data = @Html.Raw(JsonSerializer.Serialize(Model.CaloriesByDate ?? new List<int>()));
+
+        const ctx = document.getElementById('calorieChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Calories Burned',
+                    data: data,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}
