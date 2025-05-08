@@ -6,59 +6,55 @@ using System.Threading.Tasks;
 
 namespace AmazingCalculatorLibrary.Models
 {
-    class User
+    public class CalorieBurnedTracker
     {
-        public double Weight { get; set; }
-        public double Height { get; set; }
+        UserProfiles userProfiles = new UserProfiles();
 
+        /*public double WeightKg { get; set; }
+        public double HeightCm { get; set; }
         public bool IsMale { get; set; }
-        public string ActivityLevel { get; set; }
+        public string ActivityLevel { get; set; }*/
 
-        public User(double weight, double height, bool isMale, string activityLevel)
+        public CalorieBurnedTracker(double weightInPounds, double heightInInches, bool isMale, string activityLevel)
         {
-            Weight = weight;
-            Height = height;
+            userProfiles.WeightInPounds = weightInPounds;
+            userProfiles.HeightInInches = heightInInches;
             IsMale = isMale;
-            ActivityLevel = activityLevel.ToLower();
+            userProfiles.ActivityLevel = activityLevel.ToLower();
         }
-    }
-    class CalorieBurnedTracker
-    {
-        static void Main()
+
+        private double GetMetabolicEquivalent()
         {
-            // Example user
-            User user = new User(70, 175, "moderate"); // Assume weight in kg, height in cm
-
-            double caloriesBurned = CalculateCalories(user);
-
-            if (caloriesBurned > 0)
+            return ActivityLevel switch
             {
-                Console.WriteLine($"Estimated calories burned per hour: {caloriesBurned:F2} kcal");
-            }
-            else
+                "light" => 3.0,
+                "moderate" => 6.0,
+                "intense" => 9.0,
+                _ => throw new ArgumentException("Invalid activity level. Valid options are: light, moderate, intense.")
+            };
+        }
+
+        public double CaloriesBurnedPerHour
+        {
+            get
             {
-                Console.WriteLine("Invalid activity level assigned.");
+                double metabolicEquivalent = GetMetabolicEquivalent();
+                return metabolicEquivalent * WeightKg;
             }
         }
-        static double CalculateCalories(User user)
-        {
-            double metabolicEquivalent;
 
-            switch (user.ActivityLevel)
+        public string ActivityCategory
+        {
+            get
             {
-                case "light":
-                    metabolicEquivalent = 3.0;
-                    break;
-                case "moderate":
-                    metabolicEquivalent = 6.0;
-                    break;
-                case "intense":
-                    metabolicEquivalent = 9.0;
-                    break;
-                default:
-                    return -1; // Error case
+                return ActivityLevel switch
+                {
+                    "light" => "Light Activity",
+                    "moderate" => "Moderate Activity",
+                    "intense" => "Intense Activity",
+                    _ => "Unknown Activity"
+                };
             }
-            return metabolicEquivalent * user.Weight;
         }
     }
 }
