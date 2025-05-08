@@ -1,4 +1,7 @@
 ﻿using AmazingCalculatorLibrary.Models;
+using Azure;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +12,6 @@ namespace AmazingCalculatorLibrary.AdvancedTrackingFeatures
 {
     public class RealTimeProgressDashboard
     {
-        // Method that reads the input from the WorkoutSession SQL database
         private readonly FitnessDbContext _context;
 
         public RealTimeProgressDashboard(FitnessDbContext context)
@@ -17,55 +19,56 @@ namespace AmazingCalculatorLibrary.AdvancedTrackingFeatures
             _context = context;
         }
 
-        public void DisplayWorkoutHistory(int userId)
+        public static double GetBMIValue(UserProfiles bmi);
         {
-            var workouts = _context.WorkoutSessions
-                .Where(w => w.UserId == userId)
-                .OrderByDescending(w => w.WorkoutDate)
-                .ToList();
+            BMIValue = bmi;
+        }
 
-            //CoPilot suggested this. We have modified this code to use properties in BMI and BMR, and anticipate CalorieBurnedTracker to
+        // Properties to store progress data
+        public double CurrentBMI { get; private set; }
+        public string BMICategory { get; private set; }
+        public double BMR { get; private set; }
+        public int TotalCaloriesBurned { get; private set; }
 
-            //Console.WriteLine("\n Workout History:");
-            //foreach (var workout in workouts)
-            //{
-            //    Console.WriteLine($"- {workout.WorkoutDate.ToShortDateString()}: {workout.WorkoutType} for {workout.DurationInMinutes} min, burned {workout.CaloriesBurned} kcal");
-            //}
+        // Method to update progress data from the database
+        public void UpdateProgress(int userId)
+        {
+            // Fetch user profile
+            var userProfile = _context.UserProfiles.FirstOrDefault(u => u.UserId == userId);
+            if (userProfile == null) throw new Exception("User not found.");
 
-            //// Main Static Method that takes user input and calculates BMI and calories burned
-            //static void Main()
-            //{
-            //    Console.WriteLine("🏋️ Welcome to Your Real-Time Fitness Dashboard!");
+            // Calculate BMI
+            var bmi = new BMI(userProfile.WeightInPounds,
+                              Math.Floor(userProfile.HeightInInches / 12),
+                              userProfile.HeightInInches % 12,
+                              true); // Assuming male for simplicity
+            CurrentBMI = bmi.BMIValue;
+            BMICategory = bmi.BMICategory;
 
-            //    // Get user input
-            //    Console.Write("Enter weight (kg): ");
-            //    double weight = Convert.ToDouble(Console.ReadLine());
+            // Calculate BMR (using Mifflin-St Jeor Equation for demonstration)
+            BMR = CalculateBMR(userProfile.WeightInPounds, userProfile.HeightInInches, userProfile.DateOfBirth, true);
 
-            //    Console.Write("Enter height (meters): ");
-            //    double height = Convert.ToDouble(Console.ReadLine());
+            // Calculate total calories burned from workout history
+            TotalCaloriesBurned = _context.WorkoutSessions
+                .Where(ws => ws.WorkoutDate >= DateTime.Now.AddMonths(-1) && ws.WorkoutType != null)
+                .Sum(ws => ws.CaloriesBurned);
+        }
 
-            //    Console.Write("Enter activity type (Running, Cycling, Swimming, Walking): ");
-            //    string activity = Console.ReadLine();
+        private double CalculateBMR(double weightLbs, double heightInches, DateTime dateOfBirth, bool isMale)
+        {
+            var age = DateTime.Now.Year - dateOfBirth.Year;
+            if (dateOfBirth > DateTime.Now.AddYears(-age)) age--;
 
-            //    Console.Write("Enter workout duration (minutes): ");
-            //    double duration = Convert.ToDouble(Console.ReadLine());
-
-            //    // Calculate values
-            //    double bmi = BMI.Calculate(weight, height);
-            //    string bmiCategory = BMI.GetCategory(bmi);
-            //    double caloriesBurned = CalorieBurnedTracker.CalculateCaloriesBurned(activity, duration, weight);
-
-            //    // Real-time progress display simulation
-            //    Console.WriteLine("\n⌛ Calculating progress...");
-            //    Thread.Sleep(2000);  // Simulate processing delay
-
-            //    Console.WriteLine("\n📊 Your Fitness Stats:");
-            //    Console.WriteLine($"- BMI: {bmi:F2} ({bmiCategory})");
-            //    Console.WriteLine($"- Calories Burned: {caloriesBurned:F2} kcal from {activity}");
-
-            //    Console.WriteLine("\n🔥 Stay consistent and keep moving!");
-            //}
+            if (isMale)
+            {
+                return 66 + (6.23 * weightLbs) + (12.7 * heightInches) - (6.8 * age);
+            }
+            else
+            {
+                return 655 + (4.35 * weightLbs) + (4.7 * heightInches) - (4.7 * age);
+            }
         }
     }
-}
+    }
+
 
