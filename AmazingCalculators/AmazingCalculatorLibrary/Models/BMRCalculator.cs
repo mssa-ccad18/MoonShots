@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AmazingCalculatorLibrary;
+using AmazingCalculatorLibrary.Models;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace AmazingCalculatorLibrary.Models
@@ -35,3 +36,23 @@ namespace AmazingCalculatorLibrary.Models
 
 }
 
+//consider updating to 
+
+//public static class BMRCalculator
+//{
+//    public static double? CalculateBMR(UserProfiles user)
+//    {
+//        if (!user.WeightInPounds.HasValue || !user.HeightInInches.HasValue || !user.DateOfBirth.HasValue)
+//            return null;
+
+//        var age = DateTime.Now.Year - user.DateOfBirth.Value.Year;
+
+//        return user.IsMale
+//            ? 66 + (6.23 * user.WeightInPounds.Value) + (12.7 * user.HeightInInches.Value) - (6.8 * age)
+//            : 655 + (4.35 * user.WeightInPounds.Value) + (4.7 * user.HeightInInches.Value) - (4.7 * age);
+//    }
+//}
+//Then just call:
+
+
+//BMR = BMRCalculator.CalculateBMR(UserProfile);
