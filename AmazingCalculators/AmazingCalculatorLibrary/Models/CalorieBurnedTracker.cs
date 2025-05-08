@@ -8,19 +8,29 @@ namespace AmazingCalculatorLibrary.Models
 {
     public class CalorieBurnedTracker
     {
-        UserProfiles userProfiles = new UserProfiles();
+        private readonly UserProfiles userProfiles;
 
-        /*public double WeightKg { get; set; }
-        public double HeightCm { get; set; }
-        public bool IsMale { get; set; }
-        public string ActivityLevel { get; set; }*/
-
-        public CalorieBurnedTracker(double weightInPounds, double heightInInches, bool isMale, string activityLevel)
+        public CalorieBurnedTracker(UserProfiles userProfiles)
         {
-            userProfiles.WeightInPounds = weightInPounds;
-            userProfiles.HeightInInches = heightInInches;
-            userProfiles.IsMale = isMale;
-            userProfiles.ActivityLevel = activityLevel.ToLower();
+            this.userProfiles = userProfiles ?? throw new ArgumentNullException(nameof(userProfiles));
+        }
+
+        private double WeightKg => userProfiles.WeightInPounds.HasValue
+            ? userProfiles.WeightInPounds.Value * 0.453592
+            : throw new InvalidOperationException("Weight is not set in the user profile.");
+
+        private string ActivityLevel
+        {
+            get
+            {
+                return userProfiles.ActivityLevel switch
+                {
+                    1 => "light",
+                    2 => "moderate",
+                    3 => "intense",
+                    _ => throw new ArgumentException("Invalid activity level. Valid options are: 1 (light), 2 (moderate), 3 (intense).")
+                };
+            }
         }
 
         private double GetMetabolicEquivalent()
