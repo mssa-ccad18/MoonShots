@@ -15,12 +15,12 @@ namespace AmazingCalculatorLibrary.Tests
         public void TestInitialize()
         {
             // Load and deserialize the JSON file
-            string filePath = Path.Combine("MilitaryPhysicalTraining", "USMCjson.json");
+            string jsonFilePath = Path.Combine("MilitaryPhysicalTraining", "USMCjson.json");
 
             // Ensure the file exists before attempting to read it
-            Assert.IsTrue(File.Exists(filePath), $"The JSON file at {filePath} does not exist.");
+            Assert.IsTrue(File.Exists(jsonFilePath), $"The JSON file at {jsonFilePath} does not exist.");
 
-            string jsonContent = File.ReadAllText(filePath);
+            string jsonContent = File.ReadAllText(jsonFilePath);
             _fitnessData = JsonSerializer.Deserialize<USMCFitnessStandard>(jsonContent);
 
             // Ensure the deserialization was successful
@@ -42,18 +42,18 @@ namespace AmazingCalculatorLibrary.Tests
             foreach (var ageGroup in expectedAgeGroups)
             {
                 // Act
-                var fitnessStandard = _fitnessData.FitnessStandards.FirstOrDefault(fs => fs.AgeGroup == ageGroup);
+                var fitnessStandard = _fitnessData.FitnessStandards.FirstOrDefault(fs => fs.ageGroup == ageGroup);
                 Assert.IsNotNull(fitnessStandard, $"Age group {ageGroup} not found in the JSON data.");
 
                 // Ensure Male standards are not null
-                Assert.IsNotNull(fitnessStandard.Male, $"Male fitness standards for age group {ageGroup} are null.");
+                Assert.IsNotNull(fitnessStandard.male, $"Male fitness standards for age group {ageGroup} are null.");
 
                 // Simulate inputs for each exercise
-                int pushupReps = fitnessStandard.Male.Pushups?.Reps?.FirstOrDefault() ?? 0;
-                int pullupReps = fitnessStandard.Male.PullUps?.Reps?.FirstOrDefault() ?? 0;
-                int crunchesReps = fitnessStandard.Male.Crunches?.Reps?.FirstOrDefault() ?? 0;
-                int plankTime = fitnessStandard.Male.Plank?.Reps?.FirstOrDefault() ?? 0;
-                int runTime = fitnessStandard.Male.ThreeMileRun?.Reps?.FirstOrDefault() ?? 0;
+                int pushupReps = fitnessStandard.male.Pushups?.Reps?.FirstOrDefault() ?? 0;
+                int pullupReps = fitnessStandard.male.PullUps?.Reps?.FirstOrDefault() ?? 0;
+                int crunchesReps = fitnessStandard.male.Crunches?.Reps?.FirstOrDefault() ?? 0;
+                int plankTime = fitnessStandard.male.Plank?.Reps?.FirstOrDefault() ?? 0;
+                int runTime = fitnessStandard.male.ThreeMileRun?.Reps?.FirstOrDefault() ?? 0;
 
                 // Call the method
                 usmc.USMCMalePRT(true, GetAgeFromAgeGroup(ageGroup));
@@ -77,15 +77,15 @@ namespace AmazingCalculatorLibrary.Tests
             foreach (var ageGroup in expectedAgeGroups)
             {
                 // Act
-                var fitnessStandard = _fitnessData.FitnessStandards.FirstOrDefault(fs => fs.AgeGroup == ageGroup);
+                var fitnessStandard = _fitnessData.FitnessStandards.FirstOrDefault(fs => fs.ageGroup == ageGroup);
                 Assert.IsNotNull(fitnessStandard, $"Age group {ageGroup} not found in the JSON data.");
 
                 // Simulate inputs for each exercise
-                int pushupReps = fitnessStandard.Female.Pushups.Reps.First();
-                int pullupReps = fitnessStandard.Female.PullUps.Reps.First();
-                int crunchesReps = fitnessStandard.Female.Crunches.Reps.First();
-                int plankTime = fitnessStandard.Female.Plank.Reps.First();
-                int runTime = fitnessStandard.Female.ThreeMileRun.Reps.First();
+                int pushupReps = fitnessStandard.female.Pushups.Reps.First();
+                int pullupReps = fitnessStandard.female.PullUps.Reps.First();
+                int crunchesReps = fitnessStandard.female.Crunches.Reps.First();
+                int plankTime = fitnessStandard.female.Plank.Reps.First();
+                int runTime = fitnessStandard.female.ThreeMileRun.Reps.First();
 
                 // Call the method
                 usmc.USMCFemalePRT(false, GetAgeFromAgeGroup(ageGroup));
