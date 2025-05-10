@@ -30,7 +30,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             int totalScore = CalculateTotalScore(deadliftWeight, pushUps, sprintTime, plankTime, runTime);
             int passingScore = role == "combat" ? 350 : 300;
 
-            return totalScore >= passingScore ? "Pass ✅" : "Fail ❌";
+            return totalScore >= passingScore ? "Pass" : "Fail";
         }
 
         private int DeadliftPoints(int weight) => weight switch
