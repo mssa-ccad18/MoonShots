@@ -102,5 +102,51 @@ namespace AmazingCalcRazorPage.Pages
 
             return Page();
         }
+        public async Task<IActionResult> OnPostAsync()
+        {
+            var username = TempData["LoggedInUser"] as string;
+            if (string.IsNullOrEmpty(username))
+                return RedirectToPage("/Login");
+
+            TempData.Keep("LoggedInUser");
+
+            UserProfile = await _context.UserProfiles
+                .Include(u => u.WorkoutHistory)
+                .FirstOrDefaultAsync(u => u.UserName == username);
+
+            if (UserProfile == null)
+            {
+                Message = "User profile not found.";
+                return Page();
+            }
+
+            // Extract form values
+            var form = Request.Form;
+            string workoutType = form["WorkoutType"];
+            bool durationParsed = double.TryParse(form["DurationInMinutes"], out double duration);
+            bool caloriesParsed = int.TryParse(form["CaloriesBurned"], out int calories);
+
+            if (!durationParsed || !caloriesParsed || string.IsNullOrWhiteSpace(workoutType))
+            {
+                Message = "Please enter valid values for all workout fields.";
+                return await OnGetAsync(); // Reload with message
+            }
+
+            // Create and add workout session
+            var newWorkout = new WorkoutSession
+            {
+                WorkoutDate = DateTime.Now,
+                WorkoutType = workoutType,
+                DurationInMinutes = duration,
+                CaloriesBurned = calories
+            };
+
+            UserProfile.WorkoutHistory.Add(newWorkout);
+            await _context.SaveChangesAsync();
+
+            // Reload page with updated data
+            return RedirectToPage();
+        }
+
     }
 }
