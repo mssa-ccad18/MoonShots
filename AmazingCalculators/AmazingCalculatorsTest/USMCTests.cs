@@ -9,14 +9,23 @@ namespace AmazingCalculatorLibrary.Tests
     [TestClass]
     public class USMCTests
     {
-        private USMCFitnessStandard _fitnessData;
+        public USMCFitnessStandard _fitnessData;
 
         [TestInitialize]
         public void TestInitialize()
         {
             // Load and deserialize the JSON file
-            string jsonString = File.ReadAllText("USMCJson.json");
-            _fitnessData = JsonSerializer.Deserialize<USMCFitnessStandard>(jsonString);
+            string filePath = Path.Combine("MilitaryPhysicalTraining", "USMCjson.json");
+
+            // Ensure the file exists before attempting to read it
+            Assert.IsTrue(File.Exists(filePath), $"The JSON file at {filePath} does not exist.");
+
+            string jsonContent = File.ReadAllText(filePath);
+            _fitnessData = JsonSerializer.Deserialize<USMCFitnessStandard>(jsonContent);
+
+            // Ensure the deserialization was successful
+            Assert.IsNotNull(_fitnessData, "Failed to deserialize the JSON data into USMCFitnessStandard.");
+            Assert.IsNotNull(_fitnessData.FitnessStandards, "The FitnessStandards property is null after deserialization.");
         }
 
         [TestMethod]
@@ -26,18 +35,25 @@ namespace AmazingCalculatorLibrary.Tests
             var usmc = new USMC(null); // Pass null for the DbContext since it's not used in this test
             var expectedAgeGroups = new[] { "17-20", "21-25", "26-30", "31-35", "36-40", "41-45", "46-50", "51+" };
 
+            // Ensure _fitnessData and FitnessStandards are not null
+            Assert.IsNotNull(_fitnessData, "_fitnessData is null. Ensure the JSON file is loaded correctly.");
+            Assert.IsNotNull(_fitnessData.FitnessStandards, "_fitnessData.FitnessStandards is null. Ensure the JSON file contains valid data.");
+
             foreach (var ageGroup in expectedAgeGroups)
             {
                 // Act
                 var fitnessStandard = _fitnessData.FitnessStandards.FirstOrDefault(fs => fs.AgeGroup == ageGroup);
                 Assert.IsNotNull(fitnessStandard, $"Age group {ageGroup} not found in the JSON data.");
 
+                // Ensure Male standards are not null
+                Assert.IsNotNull(fitnessStandard.Male, $"Male fitness standards for age group {ageGroup} are null.");
+
                 // Simulate inputs for each exercise
-                int pushupReps = fitnessStandard.Male.Pushups.Reps.First();
-                int pullupReps = fitnessStandard.Male.PullUps.Reps.First();
-                int crunchesReps = fitnessStandard.Male.Crunches.Reps.First();
-                int plankTime = fitnessStandard.Male.Plank.Reps.First();
-                int runTime = fitnessStandard.Male.ThreeMileRun.Reps.First();
+                int pushupReps = fitnessStandard.Male.Pushups?.Reps?.FirstOrDefault() ?? 0;
+                int pullupReps = fitnessStandard.Male.PullUps?.Reps?.FirstOrDefault() ?? 0;
+                int crunchesReps = fitnessStandard.Male.Crunches?.Reps?.FirstOrDefault() ?? 0;
+                int plankTime = fitnessStandard.Male.Plank?.Reps?.FirstOrDefault() ?? 0;
+                int runTime = fitnessStandard.Male.ThreeMileRun?.Reps?.FirstOrDefault() ?? 0;
 
                 // Call the method
                 usmc.USMCMalePRT(true, GetAgeFromAgeGroup(ageGroup));

@@ -39,7 +39,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
 
         public void USMCMalePRT(bool isMale, int age)
         {
-            string jsonString = File.ReadAllText("USMCJson.json");
+            string jsonString = Path.Combine("MilitaryPhysicalTraining", "USMCjson.json");
             var fitnessData = JsonSerializer.Deserialize<USMCFitnessStandard>(jsonString);
 
             if (age < 17)
@@ -97,7 +97,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
         }
         public void USMCFemalePRT(bool isFemale, int age)
         {
-            string jsonString = File.ReadAllText("USMCJson.json");
+            string jsonString = Path.Combine("MilitaryPhysicalTraining", "USMCjson.json");
             var fitnessData = JsonSerializer.Deserialize<USMCFitnessStandard>(jsonString);
 
             if (age < 17)
@@ -188,10 +188,10 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
 
     public class USMCFitnessStandard
     {
-        public List<FitnessStandard> FitnessStandards { get; set; }
+        public List<FitnessStandards> FitnessStandards { get; set; }
     }
 
-    public class FitnessStandard
+    public class FitnessStandards
     {
         public string AgeGroup { get; set; }
         public GenderFitness Male { get; set; }
