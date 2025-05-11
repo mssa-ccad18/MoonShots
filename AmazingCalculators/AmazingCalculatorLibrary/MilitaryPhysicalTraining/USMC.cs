@@ -164,7 +164,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             if (age >= 36 && age < 41) return "36-40";
             if (age >= 41 && age < 46) return "41-45";
             if (age >= 46 && age < 51) return "46-50";
-            if (age >= 51) return "51+";
+            if (age >= 51) return "51";
             return null;
         }
 
