@@ -3,6 +3,7 @@ using System.IO;
 using System.Text.Json;
 using System.Linq;
 using AmazingCalculatorLibrary.MilitaryPhysicalTraining;
+using System.Diagnostics;
 
 namespace AmazingCalculatorLibrary.Tests
 {
@@ -15,12 +16,12 @@ namespace AmazingCalculatorLibrary.Tests
         public void TestInitialize()
         {
             // Load and deserialize the JSON file
-            string filePath = Path.Combine("MilitaryPhysicalTraining", "USMCjson.json");
+            string jsonFilePath = Path.Combine("MilitaryPhysicalTraining", "USMCjson.json");
 
             // Ensure the file exists before attempting to read it
-            Assert.IsTrue(File.Exists(filePath), $"The JSON file at {filePath} does not exist.");
+            Assert.IsTrue(File.Exists(jsonFilePath), $"The JSON file at {jsonFilePath} does not exist.");
 
-            string jsonContent = File.ReadAllText(filePath);
+            string jsonContent = File.ReadAllText(jsonFilePath);
             _fitnessData = JsonSerializer.Deserialize<USMCFitnessStandard>(jsonContent);
 
             // Ensure the deserialization was successful
@@ -33,37 +34,38 @@ namespace AmazingCalculatorLibrary.Tests
         {
             // Arrange
             var usmc = new USMC(null); // Pass null for the DbContext since it's not used in this test
-            var expectedAgeGroups = new[] { "17-20", "21-25", "26-30", "31-35", "36-40", "41-45", "46-50", "51+" };
-
-            // Ensure _fitnessData and FitnessStandards are not null
-            Assert.IsNotNull(_fitnessData, "_fitnessData is null. Ensure the JSON file is loaded correctly.");
-            Assert.IsNotNull(_fitnessData.FitnessStandards, "_fitnessData.FitnessStandards is null. Ensure the JSON file contains valid data.");
+            var expectedAgeGroups = new[] { "17-20", "21-25", "26-30", "31-35", "36-40", "41-45", "46-50", "51" };
 
             foreach (var ageGroup in expectedAgeGroups)
             {
                 // Act
-                var fitnessStandard = _fitnessData.FitnessStandards.FirstOrDefault(fs => fs.AgeGroup == ageGroup);
+                var fitnessStandard = _fitnessData.FitnessStandards.FirstOrDefault(fs => fs.ageGroup == ageGroup);
                 Assert.IsNotNull(fitnessStandard, $"Age group {ageGroup} not found in the JSON data.");
+                Assert.IsNotNull(fitnessStandard.male, $"Male fitness standards for age group {ageGroup} are null.");
 
-                // Ensure Male standards are not null
-                Assert.IsNotNull(fitnessStandard.Male, $"Male fitness standards for age group {ageGroup} are null.");
+                // Ensure all required properties are not null
+                Assert.IsNotNull(fitnessStandard.male.pushups, $"Pushups data for age group {ageGroup} is null.");
+                Assert.IsNotNull(fitnessStandard.male.pullups, $"Pullups data for age group {ageGroup} is null.");
+                Assert.IsNotNull(fitnessStandard.male.crunches, $"Crunches data for age group {ageGroup} is null.");
+                Assert.IsNotNull(fitnessStandard.male.plank, $"Plank data for age group {ageGroup} is null.");
+                Assert.IsNotNull(fitnessStandard.male.threeMileRun, $"Three-mile run data for age group {ageGroup} is null.");
 
                 // Simulate inputs for each exercise
-                int pushupReps = fitnessStandard.Male.Pushups?.Reps?.FirstOrDefault() ?? 0;
-                int pullupReps = fitnessStandard.Male.PullUps?.Reps?.FirstOrDefault() ?? 0;
-                int crunchesReps = fitnessStandard.Male.Crunches?.Reps?.FirstOrDefault() ?? 0;
-                int plankTime = fitnessStandard.Male.Plank?.Reps?.FirstOrDefault() ?? 0;
-                int runTime = fitnessStandard.Male.ThreeMileRun?.Reps?.FirstOrDefault() ?? 0;
+                int pushupReps = fitnessStandard.male.pushups?.reps?.FirstOrDefault() ?? 0;
+                int pullupReps = fitnessStandard.male.pullups?.reps?.FirstOrDefault() ?? 0;
+                int crunchesReps = fitnessStandard.male.crunches?.reps?.FirstOrDefault() ?? 0;
+                int expectedPlankTime = usmc.ParseTimeToSeconds(fitnessStandard.male.plank?.times?.FirstOrDefault() ?? "0:00");
+                int expectedRunTime = usmc.ParseTimeToSeconds(fitnessStandard.male.threeMileRun?.times?.FirstOrDefault() ?? "0:00");
 
                 // Call the method
-                usmc.USMCMalePRT(true, GetAgeFromAgeGroup(ageGroup));
+                usmc.USMCMalePRT(true, GetAgeFromAgeGroup(ageGroup), pushupReps, pullupReps, crunchesReps, expectedPlankTime, expectedRunTime);
 
                 // Assert
                 Assert.IsTrue(pushupReps >= 0, $"Pushup reps for age group {ageGroup} are invalid.");
                 Assert.IsTrue(pullupReps >= 0, $"Pullup reps for age group {ageGroup} are invalid.");
                 Assert.IsTrue(crunchesReps >= 0, $"Crunches reps for age group {ageGroup} are invalid.");
-                Assert.IsTrue(plankTime >= 0, $"Plank time for age group {ageGroup} is invalid.");
-                Assert.IsTrue(runTime >= 0, $"Run time for age group {ageGroup} is invalid.");
+                Assert.AreEqual(expectedPlankTime, usmc.ParseTimeToSeconds(fitnessStandard.male.plank?.times?.FirstOrDefault() ?? "0:00"), $"Plank time for age group {ageGroup} is invalid.");
+                Assert.AreEqual(expectedRunTime, usmc.ParseTimeToSeconds(fitnessStandard.male.threeMileRun?.times?.FirstOrDefault() ?? "0:00"), $"Run time for age group {ageGroup} is invalid.");
             }
         }
 
@@ -71,31 +73,40 @@ namespace AmazingCalculatorLibrary.Tests
         public void VerifyAllAgeGroupsWorkForFemale()
         {
             // Arrange
+            // Arrange
             var usmc = new USMC(null); // Pass null for the DbContext since it's not used in this test
-            var expectedAgeGroups = new[] { "17-20", "21-25", "26-30", "31-35", "36-40", "41-45", "46-50", "51+" };
+            var expectedAgeGroups = new[] { "17-20", "21-25", "26-30", "31-35", "36-40", "41-45", "46-50", "51" };
 
             foreach (var ageGroup in expectedAgeGroups)
             {
                 // Act
-                var fitnessStandard = _fitnessData.FitnessStandards.FirstOrDefault(fs => fs.AgeGroup == ageGroup);
+                var fitnessStandard = _fitnessData.FitnessStandards.FirstOrDefault(fs => fs.ageGroup == ageGroup);
                 Assert.IsNotNull(fitnessStandard, $"Age group {ageGroup} not found in the JSON data.");
+                Assert.IsNotNull(fitnessStandard.female, $"Male fitness standards for age group {ageGroup} are null.");
+
+                // Ensure all required properties are not null
+                Assert.IsNotNull(fitnessStandard.female.pushups, $"Pushups data for age group {ageGroup} is null.");
+                Assert.IsNotNull(fitnessStandard.female.pullups, $"Pullups data for age group {ageGroup} is null.");
+                Assert.IsNotNull(fitnessStandard.female.crunches, $"Crunches data for age group {ageGroup} is null.");
+                Assert.IsNotNull(fitnessStandard.female.plank, $"Plank data for age group {ageGroup} is null.");
+                Assert.IsNotNull(fitnessStandard.female.threeMileRun, $"Three-mile run data for age group {ageGroup} is null.");
 
                 // Simulate inputs for each exercise
-                int pushupReps = fitnessStandard.Female.Pushups.Reps.First();
-                int pullupReps = fitnessStandard.Female.PullUps.Reps.First();
-                int crunchesReps = fitnessStandard.Female.Crunches.Reps.First();
-                int plankTime = fitnessStandard.Female.Plank.Reps.First();
-                int runTime = fitnessStandard.Female.ThreeMileRun.Reps.First();
+                int pushupReps = fitnessStandard.female.pushups?.reps?.FirstOrDefault() ?? 0;
+                int pullupReps = fitnessStandard.female.pullups?.reps?.FirstOrDefault() ?? 0;
+                int crunchesReps = fitnessStandard.female.crunches?.reps?.FirstOrDefault() ?? 0;
+                int expectedPlankTime = usmc.ParseTimeToSeconds(fitnessStandard.female.plank?.times?.FirstOrDefault() ?? "0:00");
+                int expectedRunTime = usmc.ParseTimeToSeconds(fitnessStandard.female.threeMileRun?.times?.FirstOrDefault() ?? "0:00");
 
                 // Call the method
-                usmc.USMCFemalePRT(false, GetAgeFromAgeGroup(ageGroup));
+                usmc.USMCFemalePRT(true, GetAgeFromAgeGroup(ageGroup), pushupReps, pullupReps, crunchesReps, expectedPlankTime, expectedRunTime);
 
                 // Assert
                 Assert.IsTrue(pushupReps >= 0, $"Pushup reps for age group {ageGroup} are invalid.");
                 Assert.IsTrue(pullupReps >= 0, $"Pullup reps for age group {ageGroup} are invalid.");
                 Assert.IsTrue(crunchesReps >= 0, $"Crunches reps for age group {ageGroup} are invalid.");
-                Assert.IsTrue(plankTime >= 0, $"Plank time for age group {ageGroup} is invalid.");
-                Assert.IsTrue(runTime >= 0, $"Run time for age group {ageGroup} is invalid.");
+                Assert.AreEqual(expectedPlankTime, usmc.ParseTimeToSeconds(fitnessStandard.female.plank?.times?.FirstOrDefault() ?? "0:00"), $"Plank time for age group {ageGroup} is invalid.");
+                Assert.AreEqual(expectedRunTime, usmc.ParseTimeToSeconds(fitnessStandard.female.threeMileRun?.times?.FirstOrDefault() ?? "0:00"), $"Run time for age group {ageGroup} is invalid.");
             }
         }
 
