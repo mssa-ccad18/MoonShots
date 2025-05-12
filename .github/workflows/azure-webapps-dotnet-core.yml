@@ -52,6 +52,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      - name: Debug Solution File Location
+        run: |
+          ls -la AmazingCalculators
+          
       - name: Build with dotnet
         run: dotnet build ./AmazingCalculators/AmazingCalculators.sln --configuration Release
 
