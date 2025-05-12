@@ -58,7 +58,7 @@ A modular Razor Pages fitness calculator that benchmarks user health and workout
 
 ### Prerequisites
 
-- .NET 8 SDK
+- .NET 9 SDK
 - Visual Studio 2022+
 - SQL Server Express or SQLite (lightweight dev)
 - Razor Pages & Entity Framework experience recommended
