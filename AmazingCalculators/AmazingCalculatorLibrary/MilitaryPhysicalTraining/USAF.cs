@@ -12,11 +12,11 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
     {
         public readonly FitnessDbContext _context;
 
-
         public USAF(FitnessDbContext context)
         {
             _context = context;
         }
+
         public void DisplayWorkoutHistory(int userId)
         {
             var userProfile = _context.UserProfiles
@@ -34,13 +34,24 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
 
             var isMale = userProfile.IsMale;
             var isFemale = !isMale;
-
         }
 
-        public void USMCMalePRT(bool isMale, int age)
+        public void USAFMalePRT(bool isMale, int age, int pushupReps, int situpReps, int crunchesReps, int plankTime, int runTime, int handReleaseReps, int HAMRReps)
         {
-            string jsonString = Path.Combine("MilitaryPhysicalTraining", "USAFjson.json");
+            string jsonFilePath = Path.Combine("MilitaryPhysicalTraining", "USAFjson.json");
+
+            if (!File.Exists(jsonFilePath))
+            {
+                throw new FileNotFoundException($"The JSON file was not found at path: {jsonFilePath}");
+            }
+
+            string jsonString = File.ReadAllText(jsonFilePath);
             var fitnessData = JsonSerializer.Deserialize<USAFFitnessStandard>(jsonString);
+
+            if (fitnessData == null || fitnessData.Male == null)
+            {
+                throw new InvalidOperationException("The JSON file contains invalid or empty data.");
+            }
 
             if (age < 17)
             {
@@ -48,121 +59,27 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
                 return;
             }
 
-            // Prompt user for input
-            Console.Write("Enter number of pushups: ");
-            int pushupReps = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter number of situps: ");
-            int situpReps = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter number of crunches: ");
-            int crunchesReps = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter plank time (mm:ss): ");
-            int plankTime = ParseTimeToSeconds(Console.ReadLine());
-
-            Console.Write("Enter 1.5 mile run time (mm:ss): ");
-            int runTime = ParseTimeToSeconds(Console.ReadLine());
-
-            Console.Write("Enter number of hand release pushups: ");
-            int handReleaseReps = ParseTimeToSeconds(Console.ReadLine());
-
-            // Find the appropriate age group
-            var selectedRow = fitnessData.FitnessStandards
-                .FirstOrDefault(fs => fs.AgeGroup == GetAgeGroup(age));
-
-            if (selectedRow == null)
+            var ageGroup = GetAgeGroup(age);
+            if (ageGroup == null || !fitnessData.Male.ContainsKey(ageGroup))
             {
                 Console.WriteLine("No data available for this age group.");
                 return;
             }
 
-            // Calculate points for each exercise
-            int pushupPoints = GetPoints(selectedRow.Male.OneMinPushups, pushupReps);
-            int HAMRPoints = GetPoints(selectedRow.Male.TwentyMeterHAMRShuffle, runTime);
-            int runPoints = GetPoints(selectedRow.Male.OneAndOneHalfMileRun, runTime);
-            int handReleasePoints = GetPoints(selectedRow.Male.TwoMinHandReleasePushups, handReleaseReps);
-            int situpPoints = GetPoints(selectedRow.Male.OneMinSitups, situpReps);
-            int crunchesPoints = GetPoints(selectedRow.Male.TwoMinCrossLegReverseCrunch, crunchesReps);
-            int plankPoints = GetPoints(selectedRow.Male.Plank, plankTime);
+            var selectedRow = fitnessData.Male[ageGroup];
 
+            int pushupPoints = GetPoints(selectedRow.OneMinPushups, pushupReps);
+            int HAMRPoints = GetPoints(selectedRow.TwentyMeterHAMRShuffle, HAMRReps);
+            int runPoints = GetPoints(selectedRow.OneAndOneHalfMileRun, runTime);
+            int handReleasePoints = GetPoints(selectedRow.TwoMinHandReleasePushups, handReleaseReps);
+            int situpPoints = GetPoints(selectedRow.OneMinSitups, situpReps);
+            int crunchesPoints = GetPoints(selectedRow.TwoMinCrossLegReverseCrunch, crunchesReps);
+            int plankPoints = GetPoints(selectedRow.Plank, plankTime);
 
-            // Choose the higher score between pull-ups and pushups
             int higherUpperBodyPoints = Math.Max(pushupPoints, handReleasePoints);
-
-            // Choose the higher score between plank and crunches
             int higherCorePoints = Math.Max(crunchesPoints, Math.Max(plankPoints, situpPoints));
-
-            // Choose the higher score between run and HAMR
             int higherRunPoints = Math.Max(runPoints, HAMRPoints);
 
-            // Display results
-            Console.WriteLine($"Higher Upper Body Points (Pushups or Pull-ups): {higherUpperBodyPoints}");
-            Console.WriteLine($"Higher Core Points (Crunches or Plank): {higherCorePoints}");
-            Console.WriteLine($"Run Points: {higherRunPoints}");
-
-            int totalPoints = higherUpperBodyPoints + higherCorePoints + higherRunPoints;
-            Console.WriteLine($"Total Points: {totalPoints}");
-        }
-        public void USMCFemalePRT(bool isFemale, int age)
-        {
-            string jsonString = Path.Combine("MilitaryPhysicalTraining", "USAFjson.json");
-            var fitnessData = JsonSerializer.Deserialize<USAFFitnessStandard>(jsonString);
-
-            if (age < 17)
-            {
-                Console.WriteLine("Table values do not exist for ages under 17.");
-                return;
-            }
-
-            // Prompt user for input
-            Console.Write("Enter number of pushups: ");
-            int pushupReps = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter number of situps: ");
-            int situpReps = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter number of crunches: ");
-            int crunchesReps = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter plank time (mm:ss): ");
-            int plankTime = ParseTimeToSeconds(Console.ReadLine());
-
-            Console.Write("Enter 1.5 mile run time (mm:ss): ");
-            int runTime = ParseTimeToSeconds(Console.ReadLine());
-
-            Console.Write("Enter number of hand release pushups: ");
-            int handReleaseReps = ParseTimeToSeconds(Console.ReadLine());
-
-            // Find the appropriate age group
-            var selectedRow = fitnessData.FitnessStandards
-                .FirstOrDefault(fs => fs.AgeGroup == GetAgeGroup(age));
-
-            if (selectedRow == null)
-            {
-                Console.WriteLine("No data available for this age group.");
-                return;
-            }
-
-            // Calculate points for each exercise
-            int pushupPoints = GetPoints(selectedRow.Female.OneMinPushups, pushupReps);
-            int HAMRPoints = GetPoints(selectedRow.Female.TwentyMeterHAMRShuffle, runTime);
-            int runPoints = GetPoints(selectedRow.Female.OneAndOneHalfMileRun, runTime);
-            int handReleasePoints = GetPoints(selectedRow.Female.TwoMinHandReleasePushups, handReleaseReps);
-            int situpPoints = GetPoints(selectedRow.Female.OneMinSitups, situpReps);
-            int crunchesPoints = GetPoints(selectedRow.Female.TwoMinCrossLegReverseCrunch, crunchesReps);
-            int plankPoints = GetPoints(selectedRow.Female.Plank, plankTime);
-
-            // Choose the higher score between pull-ups and pushups
-            int higherUpperBodyPoints = Math.Max(pushupPoints, handReleasePoints);
-
-            // Choose the higher score between plank and crunches
-            int higherCorePoints = Math.Max(crunchesPoints, Math.Max(plankPoints, situpPoints));
-
-            // Choose the higher score between run and HAMR
-            int higherRunPoints = Math.Max(runPoints, HAMRPoints);
-
-            // Display results
             Console.WriteLine($"Higher Upper Body Points (Pushups or Pull-ups): {higherUpperBodyPoints}");
             Console.WriteLine($"Higher Core Points (Crunches or Plank): {higherCorePoints}");
             Console.WriteLine($"Run Points: {higherRunPoints}");
@@ -171,7 +88,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             Console.WriteLine($"Total Points: {totalPoints}");
         }
 
-        private string GetAgeGroup(int age)
+        public string GetAgeGroup(int age)
         {
             if (age >= 17 && age < 25) return "17-24";
             if (age >= 25 && age < 30) return "25-29";
@@ -180,40 +97,54 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             if (age >= 40 && age < 45) return "40-44";
             if (age >= 45 && age < 50) return "45-49";
             if (age >= 50 && age < 55) return "50-54";
-            if (age >= 55 && age < 60) return "50-59";
+            if (age >= 55 && age < 60) return "55-59";
             if (age >= 60) return "60+";
             return null;
         }
 
-        private int GetPoints(AFExercise exercise, int input)
+        public int GetPoints(Dictionary<string, double> exercise, int input)
         {
-            int index = exercise.Reps.IndexOf(input);
-            return index != -1 ? exercise.Points[index] : 0;
-        }
-
-        private int ParseTimeToSeconds(string time)
-        {
-            var parts = time.Split(':');
-            if (parts.Length != 2 || !int.TryParse(parts[0], out int minutes) || !int.TryParse(parts[1], out int seconds))
+            if (exercise == null)
             {
-                throw new FormatException("Invalid time format. Please enter time as mm:ss.");
+                throw new ArgumentNullException(nameof(exercise), "The exercise object cannot be null.");
             }
-            return (minutes * 60) + seconds;
+
+            string inputTime = TimeSpan.FromSeconds(input).ToString(@"m\:ss");
+            if (exercise.ContainsKey(inputTime))
+            {
+                return (int)exercise[inputTime];
+            }
+
+            return 0;
         }
-
     }
-
-
     public class USAFFitnessStandard
     {
-        public List<AFFitnessStandards> FitnessStandards { get; set; }
+        public Dictionary<string, AgeGroup> Male { get; set; } = new();
+        public Dictionary<string, AgeGroup> Female { get; set; } = new();
     }
+
+    public class AgeGroup
+    {
+        public Dictionary<string, double> OneAndOneHalfMileRun { get; set; } = new();
+        public Dictionary<string, double> OneMinPushups { get; set; } = new();
+        public Dictionary<string, double> OneMinSitups { get; set; } = new();
+        public Dictionary<string, double> TwoMinHandReleasePushups { get; set; } = new();
+        public Dictionary<string, double> TwoMinCrossLegReverseCrunch { get; set; } = new();
+        public Dictionary<string, double> Plank { get; set; } = new();
+        public Dictionary<string, double> TwentyMeterHAMRShuffle { get; set; } = new();
+    }
+
+    //public class USAFFitnessStandard
+    //{
+    //    public List<AFFitnessStandards> FitnessStandards { get; set; }
+    //}
 
     public class AFFitnessStandards
     {
-        public string AgeGroup { get; set; }
-        public AFGenderFitness Male { get; set; }
-        public AFGenderFitness Female { get; set; }
+        public string ageGroup { get; set; }
+        //public AFGenderFitness Male { get; set; }
+        //public AFGenderFitness Female { get; set; }
     }
 
     public class AFGenderFitness
@@ -230,6 +161,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
 
     public class AFExercise
     {
+        public List<string> times { get; set; }
         public List<int> Reps { get; set; }
         public List<int> Points { get; set; }
     }
