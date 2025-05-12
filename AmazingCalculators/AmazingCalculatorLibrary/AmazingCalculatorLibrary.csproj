@@ -8,10 +8,14 @@
 
   <ItemGroup>
     <None Remove="MilitaryPhysicalTraining\USMCjson.json" />
+    <None Remove="MilitaryPhysicalTraining\USNjson.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="MilitaryPhysicalTraining\USMCjson.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MilitaryPhysicalTraining\USNjson.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -23,6 +27,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>
