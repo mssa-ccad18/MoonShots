@@ -47,29 +47,12 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore AmazingCalculators/AmazingCalculators.sln
 
-      - name: Cache NuGet packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-
-      - name: Debug Solution File Location
-        run: |
-          ls -la AmazingCalculators
-                 
       - name: Build with dotnet
         run: dotnet build AmazingCalculators/AmazingCalculators.sln --configuration Release
 
-      - name: Create Publish Directory
-        run: mkdir -p ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-
       - name: Publish with dotnet
-        run: |
-          dotnet publish AmazingCalculators/AmazingCalculators.sln --configuration Release --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-          ls -la ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-
+        run: dotnet publish AmazingCalculators/AmazingCalculators.sln --configuration Release --output ./publish
+         
       - name: Upload published artifact
         uses: actions/upload-artifact@v4
         with:
@@ -88,16 +71,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dotnet-app
-
-      - name: Debug Artifact Path
-        run: |
-          ls -la ./
-          ls -la ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-
-      - name: Debug Deployment Directory
-        run: |
-          ls -la ./
-          ls -la ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
