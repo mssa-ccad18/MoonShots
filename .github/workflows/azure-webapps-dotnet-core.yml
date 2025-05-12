@@ -50,8 +50,16 @@ jobs:
       - name: Build with dotnet
         run: dotnet build AmazingCalculators/AmazingCalculators.sln --configuration Release
 
+      - name: Clean Publish Directory
+        run: |
+          if [ -d "./publish" ]; then
+          rm -rf ./publish
+          fi
+
       - name: Publish with dotnet
-        run: dotnet publish AmazingCalculators/AmazingCalculators.sln --configuration Release --output ./publish
+        run: |
+          dotnet publish AmazingCalculators/AmazingCalculators.sln --configuration Release --output ./publish
+          ls -la ./publish
          
       - name: Upload published artifact
         uses: actions/upload-artifact@v4
