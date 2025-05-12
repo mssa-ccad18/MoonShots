@@ -12,32 +12,23 @@ namespace AmazingCalculatorLibrary.Tests
     {
         public USNFitnessStandard _fitnessData;
 
-        [TestInitialize]
-        public void InitialTestToReadJSON()
-        {
-            {
-                // Load and deserialize the JSON file
-                string jsonFilePath = Path.Combine("MilitaryPhysicalTraining", "USNjson.json");
-
-                // Ensure the file exists before attempting to read it
-                Assert.IsTrue(File.Exists(jsonFilePath), $"The JSON file at {jsonFilePath} does not exist.");
-
-                string jsonContent = File.ReadAllText(jsonFilePath);
-                _fitnessData = JsonSerializer.Deserialize<USNFitnessStandard>(jsonContent);
-
-                // Ensure the deserialization was successful
-                Assert.IsNotNull(_fitnessData, "Failed to deserialize the JSON data into USMCFitnessStandard.");
-                Assert.IsNotNull(_fitnessData.USNavyFitnessStandards, "The FitnessStandards property is null after deserialization.");
-
-            }
-        }
+      
 
         [TestMethod]
         public void VerifyAllAgeGroupsWorkForUSNMale()
         {
+            // Load and deserialize the JSON file
+            string jsonFilePath = Path.Combine("MilitaryPhysicalTraining", "USNjson.json");
+
+            // Ensure the file exists before attempting to read it
+            Assert.IsTrue(File.Exists(jsonFilePath), $"The JSON file at {jsonFilePath} does not exist.");
+
+            string jsonContent = File.ReadAllText(jsonFilePath);
+            _fitnessData = JsonSerializer.Deserialize<USNFitnessStandard>(jsonContent);
+
             // Arrange
             var usn = new USN(null); // Pass null for the DbContext since it's not used in this test
-            var expectedAgeGroups = new[] { "17-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50+" };
+            var expectedAgeGroups = new[] { "17-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50" };
 
             foreach (var ageGroup in expectedAgeGroups)
             {
@@ -70,9 +61,19 @@ namespace AmazingCalculatorLibrary.Tests
         [TestMethod]
         public void VerifyAllAgeGroupsWorkForUSNFemale()
         {
+
+            // Load and deserialize the JSON file
+            string jsonFilePath = Path.Combine("MilitaryPhysicalTraining", "USNjson.json");
+
+            // Ensure the file exists before attempting to read it
+            Assert.IsTrue(File.Exists(jsonFilePath), $"The JSON file at {jsonFilePath} does not exist.");
+
+            string jsonContent = File.ReadAllText(jsonFilePath);
+            _fitnessData = JsonSerializer.Deserialize<USNFitnessStandard>(jsonContent);
+
             // Arrange
             var usn = new USN(null); // Pass null for the DbContext since it's not used in this test
-            var expectedAgeGroups = new[] { "17-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50+" };
+            var expectedAgeGroups = new[] { "17-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50" };
 
             foreach (var ageGroup in expectedAgeGroups)
             {

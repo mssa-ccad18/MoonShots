@@ -32,6 +32,7 @@ namespace AmazingCalculatorLibrary.Tests
         [TestMethod]
         public void VerifyAllAgeGroupsWorkForMale()
         {
+
             // Arrange
             var usmc = new USMC(null); // Pass null for the DbContext since it's not used in this test
             var expectedAgeGroups = new[] { "17-20", "21-25", "26-30", "31-35", "36-40", "41-45", "46-50", "51" };
@@ -72,7 +73,7 @@ namespace AmazingCalculatorLibrary.Tests
         [TestMethod]
         public void VerifyAllAgeGroupsWorkForFemale()
         {
-            // Arrange
+
             // Arrange
             var usmc = new USMC(null); // Pass null for the DbContext since it's not used in this test
             var expectedAgeGroups = new[] { "17-20", "21-25", "26-30", "31-35", "36-40", "41-45", "46-50", "51" };
