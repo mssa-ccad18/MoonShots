@@ -15,7 +15,6 @@ namespace AmazingCalculatorLibrary.Models
         public double HeightInches { get; set; }
         public int Age { get; set; }
         public int Height { get; set; }
-        public BMRCalculator() { }
         public BMRCalculator(double weightLbs, double heightInches, int age)
         {
             WeightLbs = weightLbs;
