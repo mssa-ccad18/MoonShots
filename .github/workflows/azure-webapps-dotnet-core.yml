@@ -53,10 +53,12 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Build with dotnet
-        run: dotnet build ./AmazingCalculators/AmazingCalculators.sln --configuration Release
+        run: dotnet build AmazingCalculators/AmazingCalculators.sln --configuration Release
 
       - name: Publish with dotnet
-        run: dotnet publish ./AmazingCalculators/AmazingCalculators.sln --configuration Release --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        run: |
+          dotnet publish AmazingCalculators/AmazingCalculators.sln --configuration Release --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          ls -la ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
       - name: Upload published artifact
         uses: actions/upload-artifact@v4
@@ -76,6 +78,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dotnet-app
+
+      - name: Debug Artifact Path
+        run: |
+          ls -la ./
+          ls -la ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
