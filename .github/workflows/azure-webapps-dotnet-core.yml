@@ -20,7 +20,7 @@
 name: Build and Deploy ASP.NET Core App to Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: AmazingCalculators
+  AZURE_WEBAPP_NAME: FitnessCalculator
   AZURE_WEBAPP_PACKAGE_PATH: './publish'
   DOTNET_VERSION: '9.0.x'
 
