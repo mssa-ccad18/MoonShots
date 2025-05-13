@@ -20,7 +20,7 @@
 name: Build and Deploy ASP.NET Core App to Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: FitnessCalculator
+  AZURE_WEBAPP_NAME: AmazingCalculators
   AZURE_WEBAPP_PACKAGE_PATH: './publish'
   DOTNET_VERSION: '9.0.x'
 
@@ -44,32 +44,30 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Cache NuGet packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-
-      - name: Restore dependencies
-        run: dotnet restore AmazingCalculators/AmazingCalculators.sln
-
-      - name: Build with dotnet
-        run: dotnet build AmazingCalculators/AmazingCalculators.sln --configuration Release
-
       - name: Clean Publish Directory
         run: |
           if [ -d "./publish" ]; then
-          rm -rf ./publish
+            rm -rf ./publish
           fi
+
+      - name: Create Publish Directory
+        run: mkdir -p ./publish
+
+      - name: Restore Dependencies
+        run: dotnet restore AmazingCalculators/AmazingCalculators.sln
+
+      - name: Verify Solution File Path
+        run: ls -la AmazingCalculators
+
+      - name: Build with dotnet
+        run: dotnet build AmazingCalculators/AmazingCalculators.sln --configuration Release
 
       - name: Publish with dotnet
         run: |
           dotnet publish AmazingCalculators/AmazingCalculators.sln --configuration Release --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           ls -la ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-         
-      - name: Upload published artifact
+
+      - name: Upload Published Artifact
         uses: actions/upload-artifact@v4
         with:
           name: dotnet-app
@@ -79,11 +77,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Development'
-      url: https://fitnesscalculator.azurewebsites.net/
+      name: 'Production'
+      url: https://amazingcalculators.azurewebsites.net/
 
     steps:
-      - name: Download artifact
+      - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
           name: dotnet-app
