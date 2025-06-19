@@ -70,9 +70,9 @@ public class FitnessCalculatorsModel : PageModel
             }
             else if (SelectedCalculator == "USN")
             {
-                var usn = new USN(_context);
-                usn.USNPRT(IsMale, Age, PushupReps, plankTime, runTime);
-                Result = "USN Calculation complete. See output above.";
+                var usn = new USN(_context, _env);
+                TotalPoints = usn.USNPRT(IsMale, Age, PushupReps, plankTime, runTime);
+                Result = $"USN Calculation complete. You scored {TotalPoints}.";
             }
         }
         catch (Exception ex)
