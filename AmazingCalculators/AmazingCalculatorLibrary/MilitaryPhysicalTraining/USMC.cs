@@ -45,12 +45,13 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
 
         private readonly string _jsonPath;
         public readonly FitnessDbContext _context;
-        private readonly IWebHostEnvironment _env;
+        //private readonly Microsoft.AspNetCore.Hosting.I
+            //IWebHostEnvironment _env;
 
-        public USMC(FitnessDbContext context, IWebHostEnvironment env)
+        public USMC(FitnessDbContext context)
         {
             _context = context;
-            _env = env;
+            //_env = env;
             _jsonPath = Path.Combine(AppContext.BaseDirectory, "MilitaryPhysicalTraining", "USMCjson.json");
         }
 

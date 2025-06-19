@@ -13,7 +13,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
         // Method that reads the input from the WorkoutSession SQL database
         private readonly string _jsonPath;
         private readonly FitnessDbContext _context;
-        private readonly IWebHostEnvironment _env;
+        //private readonly IWebHostEnvironment _env;
 
         //properties
         public class USNFitnessStandard
@@ -43,10 +43,10 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
         }
 
 
-        public USN(FitnessDbContext context, IWebHostEnvironment env)
+        public USN(FitnessDbContext context)
         {
             _context = context;
-            _env = env;
+           
             _jsonPath = Path.Combine(AppContext.BaseDirectory, "MilitaryPhysicalTraining", "USNjson.json");
         }
 

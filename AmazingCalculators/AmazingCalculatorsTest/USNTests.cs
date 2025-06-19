@@ -10,7 +10,7 @@ namespace AmazingCalculatorLibrary.Tests
     [TestClass]
     public class USNTests
     {
-        public USNFitnessStandard _fitnessData;
+        public USN.USNFitnessStandard _fitnessData;
 
       
 
@@ -24,7 +24,7 @@ namespace AmazingCalculatorLibrary.Tests
             Assert.IsTrue(File.Exists(jsonFilePath), $"The JSON file at {jsonFilePath} does not exist.");
 
             string jsonContent = File.ReadAllText(jsonFilePath);
-            _fitnessData = JsonSerializer.Deserialize<USNFitnessStandard>(jsonContent);
+            _fitnessData = JsonSerializer.Deserialize<USN.USNFitnessStandard>(jsonContent);
 
             // Arrange
             var usn = new USN(null); // Pass null for the DbContext since it's not used in this test
@@ -69,7 +69,7 @@ namespace AmazingCalculatorLibrary.Tests
             Assert.IsTrue(File.Exists(jsonFilePath), $"The JSON file at {jsonFilePath} does not exist.");
 
             string jsonContent = File.ReadAllText(jsonFilePath);
-            _fitnessData = JsonSerializer.Deserialize<USNFitnessStandard>(jsonContent);
+            _fitnessData = JsonSerializer.Deserialize<USN.USNFitnessStandard>(jsonContent);
 
             // Arrange
             var usn = new USN(null); // Pass null for the DbContext since it's not used in this test

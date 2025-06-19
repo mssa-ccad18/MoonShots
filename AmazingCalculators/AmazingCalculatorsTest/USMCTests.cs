@@ -10,7 +10,7 @@ namespace AmazingCalculatorLibrary.Tests
     [TestClass]
     public class USMCTests
     {
-        public USMCFitnessStandard _fitnessData;
+        public USMC.USMCFitnessStandard _fitnessData;
 
         [TestInitialize]
         public void TestInitialize()
@@ -22,7 +22,7 @@ namespace AmazingCalculatorLibrary.Tests
             Assert.IsTrue(File.Exists(jsonFilePath), $"The JSON file at {jsonFilePath} does not exist.");
 
             string jsonContent = File.ReadAllText(jsonFilePath);
-            _fitnessData = JsonSerializer.Deserialize<USMCFitnessStandard>(jsonContent);
+            _fitnessData = JsonSerializer.Deserialize<USMC.USMCFitnessStandard>(jsonContent);
 
             // Ensure the deserialization was successful
             Assert.IsNotNull(_fitnessData, "Failed to deserialize the JSON data into USMCFitnessStandard.");

@@ -58,7 +58,7 @@ public class FitnessCalculatorsModel : PageModel
 
             if (SelectedCalculator == "USMC")
             {
-                var usmc = new USMC(_context, _env);
+                var usmc = new USMC(_context);
                 if (IsMale)
                 {
                     TotalPoints = usmc.USMCMalePRT(IsMale, Age, PushupReps, PullUpReps, CrunchesReps, plankTime, runTime);
@@ -72,7 +72,7 @@ public class FitnessCalculatorsModel : PageModel
             }
             else if (SelectedCalculator == "USN")
             {
-                var usn = new USN(_context, _env);
+                var usn = new USN(_context);
                 TotalPoints = usn.USNPRT(IsMale, Age, PushupReps, plankTime, runTime);
                 Result = $"USN Calculation complete. You scored {TotalPoints}.";
             }
