@@ -1,0 +1,32 @@
+﻿@page
+@model FitnessCalculatorsModel
+@{
+    ViewData["Title"] = "Military Physical Fitness Calculator";
+}
+
+<h2>Military Physical Fitness Calculator</h2>
+<form method="post">
+    <label>
+        Calculator:
+        <select asp-for="SelectedCalculator" asp-items="@(new SelectList(Model.CalculatorOptions))"></select>
+    </label><br />
+    <label>Age: <input asp-for="Age" /></label><br />
+    <label>
+        Gender:
+        <select asp-for="IsMale">
+            <option value="true">Male</option>
+            <option value="false">Female</option>
+        </select>
+    </label><br />
+    <label>Pushups: <input asp-for="PushupReps" /></label><br />
+    <label>Pullups: <input asp-for="PullUpReps" /></label><br />
+    <label>Crunches: <input asp-for="CrunchesReps" /></label><br />
+    <label>Plank Time (mm:ss): <input asp-for="PlankTimeString" placeholder="mm:ss" /></label><br />
+    <label>Run Time (mm:ss): <input asp-for="RunTimeString" placeholder="mm:ss" /></label><br />
+    <button type="submit">Calculate</button>
+</form>
+
+@if (Model.Result != null)
+{
+    <div>@Model.Result</div>
+}

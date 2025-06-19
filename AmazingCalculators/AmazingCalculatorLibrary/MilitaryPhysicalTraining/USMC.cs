@@ -1,6 +1,8 @@
 ﻿using AmazingCalculatorLibrary.Models;
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -10,13 +12,49 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
 {
     public class USMC
     {
+
+        // Properties
+        public class USMCFitnessStandard
+        {
+            public List<FitnessStandards> FitnessStandards { get; set; }
+        }
+
+        public class FitnessStandards
+        {
+            public string ageGroup { get; set; }
+            public GenderFitness male { get; set; }
+            public GenderFitness female { get; set; }
+        }
+
+        public class GenderFitness
+        {
+            public Exercise pushups { get; set; }
+            public Exercise pullups { get; set; }
+            public Exercise crunches { get; set; }
+            public Exercise threeMileRun { get; set; }
+            public Exercise plank { get; set; }
+        }
+
+        public class Exercise
+        {
+            public List<int> reps { get; set; }
+            public List<string> times { get; set; }
+            public List<int> points { get; set; }
+        }
+        // Change the accessibility of the IWebHostEnvironment interface from internal to public
+
+        private readonly string _jsonPath;
         public readonly FitnessDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-
-        public USMC(FitnessDbContext context)
+        public USMC(FitnessDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
+            _jsonPath = Path.Combine(AppContext.BaseDirectory, "MilitaryPhysicalTraining", "USMCjson.json");
         }
+
+
         public void DisplayWorkoutHistory(int userId)
         {
             var userProfile = _context.UserProfiles
@@ -37,12 +75,12 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
 
         }
 
-        public void USMCMalePRT(bool isMale, int age, int pushupReps, int pullupReps, int crunchesReps, int plankTime, int runTime)
+        public int USMCMalePRT(bool isMale, int age, int pushupReps, int pullupReps, int crunchesReps, int plankTime, int runTime)
         {
             // Resolve the full path to the JSON file
-            string jsonFilePath = Path.Combine("MilitaryPhysicalTraining", "USMCjson.json");
+            string jsonFilePath = Path.Combine(AppContext.BaseDirectory, "MilitaryPhysicalTraining", "USMCjson.json");
 
-            // Check if the file exists
+            // Check if the file exists 
             if (!File.Exists(jsonFilePath))
             {
                 throw new FileNotFoundException($"The JSON file was not found at path: {jsonFilePath}");
@@ -60,7 +98,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             if (age < 17)
             {
                 Console.WriteLine("Table values do not exist for ages under 17.");
-                return;
+                return 0;
             }
 
             // Find the appropriate age group
@@ -70,7 +108,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             if (selectedRow == null)
             {
                 Console.WriteLine("No data available for this age group.");
-                return;
+                return 0;
             }
 
             // Calculate points for each exercise
@@ -80,7 +118,6 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             int plankPoints = GetPoints(selectedRow.male.plank, plankTime, isTime: true);
             int runPoints = GetPoints(selectedRow.male.threeMileRun, runTime, isTime: true);
 
-
             // Choose the higher score between pull-ups and pushups
             int higherUpperBodyPoints = Math.Max(pushupPoints, pullupPoints);
 
@@ -91,15 +128,17 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             Console.WriteLine($"Higher Upper Body Points (Pushups or Pull-ups): {higherUpperBodyPoints}");
             Console.WriteLine($"Higher Core Points (Crunches or Plank): {higherCorePoints}");
             Console.WriteLine($"Run Points: {runPoints}");
-
+            
             int totalPoints = higherUpperBodyPoints + higherCorePoints + runPoints;
-            Console.WriteLine($"Total Points: {totalPoints}");
+            
+            return totalPoints;
+            //Console.WriteLine($"Total Points: {totalPoints}");
         }
 
-        public void USMCFemalePRT(bool isFemale, int age, int pushupReps, int pullupReps, int crunchesReps, int plankTime, int runTime)
+        public int USMCFemalePRT(bool isFemale, int age, int pushupReps, int pullupReps, int crunchesReps, int plankTime, int runTime)
         {
             // Resolve the full path to the JSON file
-            string jsonFilePath = Path.Combine("MilitaryPhysicalTraining", "USMCjson.json");
+            string jsonFilePath = Path.Combine(AppContext.BaseDirectory, "MilitaryPhysicalTraining", "USMCjson.json");
 
             // Check if the file exists
             if (!File.Exists(jsonFilePath))
@@ -119,7 +158,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             if (age < 17)
             {
                 Console.WriteLine("Table values do not exist for ages under 17.");
-                return;
+                return 0;
             }
 
             // Find the appropriate age group
@@ -129,7 +168,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             if (selectedRow == null)
             {
                 Console.WriteLine("No data available for this age group.");
-                return;
+                return 0;
             }
 
             // Calculate points for each exercise
@@ -138,7 +177,6 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             int crunchesPoints = GetPoints(selectedRow.female.crunches, crunchesReps);
             int plankPoints = GetPoints(selectedRow.female.plank, plankTime, isTime: true);
             int runPoints = GetPoints(selectedRow.female.threeMileRun, runTime, isTime: true);
-
 
             // Choose the higher score between pull-ups and pushups
             int higherUpperBodyPoints = Math.Max(pushupPoints, pullupPoints);
@@ -152,6 +190,8 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             Console.WriteLine($"Run Points: {runPoints}");
 
             int totalPoints = higherUpperBodyPoints + higherCorePoints + runPoints;
+            return totalPoints;
+
             Console.WriteLine($"Total Points: {totalPoints}");
         }
 
@@ -216,32 +256,5 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
         }
     }
 
-    public class USMCFitnessStandard
-    {
-        public List<FitnessStandards> FitnessStandards { get; set; }
-    }
-
-    public class FitnessStandards
-    {
-        public string ageGroup { get; set; }
-        public GenderFitness male { get; set; }
-        public GenderFitness female { get; set; }
-    }
-
-    public class GenderFitness
-    {
-        public Exercise pushups { get; set; }
-        public Exercise pullups { get; set; }
-        public Exercise crunches { get; set; }
-        public Exercise threeMileRun { get; set; }
-        public Exercise plank { get; set; }
-    }
-
-    public class Exercise
-    {
-        public List<int> reps { get; set; }
-        public List<string> times { get; set; }
-        public List<int> points { get; set; }
-    }
 }
 
