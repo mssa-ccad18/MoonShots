@@ -11,12 +11,45 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
     public class USN
     {
         // Method that reads the input from the WorkoutSession SQL database
+        private readonly string _jsonPath;
         private readonly FitnessDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public USN(FitnessDbContext context)
+        //properties
+        public class USNFitnessStandard
+        {
+            public List<USNavyFitnessStandards> USNavyFitnessStandards { get; set; }
+        }
+
+        public class USNavyFitnessStandards
+        {
+            public string ageGroup { get; set; }
+            public GenderFitness male { get; set; }
+            public GenderFitness female { get; set; }
+        }
+
+        public class GenderFitness
+        {
+            public ExerciseUSN pushups { get; set; }
+            public ExerciseUSN plank { get; set; }
+            public ExerciseUSN oneAndHalfMileRun { get; set; }
+        }
+
+        public class ExerciseUSN
+        {
+            public List<int> reps { get; set; }
+            public List<string> times { get; set; }
+            public List<int> points { get; set; }
+        }
+
+
+        public USN(FitnessDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
+            _jsonPath = Path.Combine(AppContext.BaseDirectory, "MilitaryPhysicalTraining", "USNjson.json");
         }
+
         public void DisplayWorkoutHistory(int userId)
         {
             var userProfile = _context.UserProfiles
@@ -36,10 +69,10 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             var isFemale = !isMale;
 
         }
-        public void USNPRT(bool isMale, int age, int pushupReps, int plankTime, int runTime)
+        public int USNPRT(bool isMale, int age, int pushupReps, int plankTime, int runTime)
         {
             // Resolve the full path to the JSON file
-            string jsonFilePath = Path.Combine("MilitaryPhysicalTraining", "USNjson.json");
+            string jsonFilePath = Path.Combine(AppContext.BaseDirectory, "MilitaryPhysicalTraining", "USNjson.json");
 
             // Check if the file exists
             if (!File.Exists(jsonFilePath))
@@ -58,7 +91,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             if (age < 17)
             {
                 Console.WriteLine("Table values do not exist for ages under 17.");
-                return;
+                return 0;
             }
             // Find the appropriate age group
             var selectedRow = fitnessData.USNavyFitnessStandards
@@ -67,7 +100,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             if (selectedRow == null)
             {
                 Console.WriteLine("No data available for this age group.");
-                return;
+                return 0;
             }
 
             // Calculate points for each exercise
@@ -82,6 +115,7 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
             Console.WriteLine($"Run Points: {runPoints}");
 
             int totalPoints = pushupPoints + plankPoints + runPoints;
+            return totalPoints;
             Console.WriteLine($"Total Points: {totalPoints}");
         }
 
@@ -131,30 +165,5 @@ namespace AmazingCalculatorLibrary.MilitaryPhysicalTraining
     }
 
 }
-        public class USNFitnessStandard
-        {
-            public List<USNavyFitnessStandards> USNavyFitnessStandards { get; set; }
-        }
 
-        public class USNavyFitnessStandards
-{
-            public string ageGroup { get; set; }
-            public GenderFitness male { get; set; }
-            public GenderFitness female { get; set; }
-        }
-
-        public class GenderFitness
-        {
-            public ExerciseUSN pushups { get; set; }
-            public ExerciseUSN plank { get; set; }
-            public ExerciseUSN oneAndHalfMileRun { get; set; }
-        }
-
-        public class ExerciseUSN
-        {
-            public List<int> reps { get; set; }
-            public List<string> times { get; set; }
-            public List<int> points { get; set; }
-        }
-    
 
