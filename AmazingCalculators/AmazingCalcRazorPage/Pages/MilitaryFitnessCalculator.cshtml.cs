@@ -10,14 +10,16 @@ using System.Globalization;
 public class FitnessCalculatorsModel : PageModel
 {
     private readonly FitnessDbContext _context;
-    private readonly AmazingCalculatorLibrary.MilitaryPhysicalTraining.IWebHostEnvironment _env;
+    private readonly IWebHostEnvironment _env;
 
     private readonly IConfiguration _configuration;
 
-    public FitnessCalculatorsModel(IConfiguration configuration)
+    public FitnessCalculatorsModel(FitnessDbContext contex, IWebHostEnvironment env, IConfiguration configutation)
     {
 
-        _configuration = configuration;
+        _context = contex;
+        _env = env;
+        _configuration = configutation;
         CalculatorOptions = new List<string> { "USMC", "USN", "USA", "USAF", "USCG" };
     }
 
